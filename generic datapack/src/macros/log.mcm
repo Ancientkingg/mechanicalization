@@ -1,0 +1,8 @@
+macro log{
+    !config.dev{
+        <%%
+            const _args = args.map(_=>_.content);
+            emit(`tellraw @a ["",{"text":"[ ","color":"yellow"},{"text":"${_args.shift()}","color":"blue"},{"text":" ] ","color":"yellow"},{"text":"${_args.join(' ')}","color":"gold"}]`);
+        %%>
+    }
+}

@@ -1,0 +1,86 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "item/white_dye"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 1
+			},
+			"model": "minecraft:item/titan/body"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 2
+			},
+			"model": "minecraft:item/titan/seat"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 3
+			},
+			"model": "minecraft:item/titan/left_arm"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 4
+			},
+			"model": "minecraft:item/titan/drill"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 5
+			},
+			"model": "minecraft:item/titan/right_arm"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 6
+			},
+			"model": "minecraft:item/titan/jetpack"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 7
+			},
+			"model": "minecraft:item/titan/left_leg"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 8
+			},
+			"model": "minecraft:item/titan/left_knee"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 9
+			},
+			"model": "minecraft:item/titan/left_foot"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10
+			},
+			"model": "minecraft:item/titan/right_leg"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 11
+			},
+			"model": "minecraft:item/titan/right_knee"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 12
+			},
+			"model": "minecraft:item/titan/right_foot"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 13
+			},
+			"model": "minecraft:item/titan/light_off/body"
+		}
+	]
+}

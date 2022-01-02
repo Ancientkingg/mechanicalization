@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:item/handheld_rod",
+  "textures": {
+    "layer0": "minecraft:item/warped_fungus_on_a_stick"
+  },
+  "overrides": [
+    {"predicate": {"custom_model_data": 1}, "model": "item/flare"},
+    {"predicate": {"custom_model_data": 2}, "model": "item/rocket"},
+    {"predicate": {"custom_model_data": 3}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 4}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 5}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 6}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 7}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 8}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 9}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 10}, "model": "item/stick_invis"},
+    {"predicate": {"custom_model_data": 11}, "model": "item/stick_invis"}
+  ]
+}

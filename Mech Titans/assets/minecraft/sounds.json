@@ -1,0 +1,27 @@
+{
+    "titan.footstep":{
+        "category": "master",
+        "sounds":["titan/footstep"]
+    },
+    "titan.off":{
+        "category": "master",
+        "sounds":["titan/off"]
+    },
+    "titan.on":{
+        "category": "master",
+        "sounds":["titan/on"]
+    },
+    "titan.missile":{
+        "category": "master",
+        "sounds":["titan/missile"]
+    }
+    ,
+    "titan.laser":{
+        "category": "master",
+        "sounds":["titan/laser"]
+    },
+    "titan.jetpack":{
+        "category": "master",
+        "sounds":["titan/jetpack"]
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "providers": [
+        {
+            "type": "ttf",
+            "file": "minecraft:gemina.ttf",
+            "shift": [0, 25.0],
+            "size": 15.0,
+            "oversample": 4.0
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+#built using mc-build (https://github.com/mc-build/mc-build)
+
+execute if entity @s[tag=aj.puppet.bone.shoe] run function puppet:animations/animation.model.walk/__generated__/execute/1091
+execute if entity @s[tag=aj.puppet.bone.bone3] run function puppet:animations/animation.model.walk/__generated__/execute/1128
+execute if entity @s[tag=aj.puppet.bone.leg2] run function puppet:animations/animation.model.walk/__generated__/execute/1165
+execute if entity @s[tag=aj.puppet.bone.body] run function puppet:animations/animation.model.walk/__generated__/execute/1202
+execute if entity @s[tag=aj.puppet.bone.head] run function puppet:animations/animation.model.walk/__generated__/execute/1239
+execute if entity @s[tag=aj.puppet.bone.arm] run function puppet:animations/animation.model.walk/__generated__/execute/1276
+execute if entity @s[tag=aj.puppet.bone.bone15] run function puppet:animations/animation.model.walk/__generated__/execute/1313
+execute if entity @s[tag=aj.puppet.bone.bone16] run function puppet:animations/animation.model.walk/__generated__/execute/1350
+execute if entity @s[tag=aj.puppet.bone.bone17] run function puppet:animations/animation.model.walk/__generated__/execute/1387
+execute if entity @s[tag=aj.puppet.bone.bone18] run function puppet:animations/animation.model.walk/__generated__/execute/1424
+execute if entity @s[tag=aj.puppet.bone.hand] run function puppet:animations/animation.model.walk/__generated__/execute/1461
+execute if entity @s[tag=aj.puppet.bone.leftarm] run function puppet:animations/animation.model.walk/__generated__/execute/1498
+execute if entity @s[tag=aj.puppet.bone.hat] run function puppet:animations/animation.model.walk/__generated__/execute/1535
+execute if entity @s[tag=aj.puppet.bone.face] run function puppet:animations/animation.model.walk/__generated__/execute/1572
+execute if entity @s[tag=aj.puppet.bone.bone2] run function puppet:animations/animation.model.walk/__generated__/execute/1609
+execute if entity @s[tag=aj.puppet.bone.bone4] run function puppet:animations/animation.model.walk/__generated__/execute/1646
+execute if entity @s[tag=aj.puppet.bone.bone5] run function puppet:animations/animation.model.walk/__generated__/execute/1683
+execute if entity @s[tag=aj.puppet.bone.bone6] run function puppet:animations/animation.model.walk/__generated__/execute/1720
+execute if entity @s[tag=aj.puppet.bone.bone7] run function puppet:animations/animation.model.walk/__generated__/execute/1757
+execute if entity @s[tag=aj.puppet.bone.bone8] run function puppet:animations/animation.model.walk/__generated__/execute/1794
+execute if entity @s[tag=aj.puppet.bone.shoe2] run function puppet:animations/animation.model.walk/__generated__/execute/1831
+execute if entity @s[tag=aj.puppet.bone.bone9] run function puppet:animations/animation.model.walk/__generated__/execute/1868
+execute if entity @s[tag=aj.puppet.bone.bone11] run function puppet:animations/animation.model.walk/__generated__/execute/1905
+execute if entity @s[tag=aj.puppet.bone.bone13] run function puppet:animations/animation.model.walk/__generated__/execute/1942
+execute if entity @s[tag=aj.puppet.bone.bone] run function puppet:animations/animation.model.walk/__generated__/execute/1979
+execute if entity @s[tag=aj.puppet.bone.bone10] run function puppet:animations/animation.model.walk/__generated__/execute/2016
+execute if entity @s[tag=aj.puppet.bone.bone12] run function puppet:animations/animation.model.walk/__generated__/execute/2053
+execute if entity @s[tag=aj.puppet.bone.bone14] run function puppet:animations/animation.model.walk/__generated__/execute/2090
+execute if entity @s[tag=aj.puppet.bone.leg3] run function puppet:animations/animation.model.walk/__generated__/execute/2127
+tp @s ~ ~ ~ ~ ~
