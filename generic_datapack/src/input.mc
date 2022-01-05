@@ -76,13 +76,14 @@ entities not_lockable{
 	minecraft:item
 	minecraft:item_frame
 	minecraft:area_effect_cloud
+	\#input:minecarts
 }
 
 function particle_hitbox{
 	LOOP(41,x){
 		LOOP(41,y){
 			!IF(x < 1 || y < 1 || x > 39 || y > 39){
-				execute anchored eyes run particle dust 1 0 0 0.3 ^<%(x-20)/60%> ^<%(y-20)/60%> ^1 0 0 0 0 1 force @a[tag=ak.self,distance=..40,limit=1]
+				execute anchored eyes run particle dust 1 0 0 0.3 ^<%(x-20)/50%> ^<%(y-20)/50%> ^1 0 0 0 0 1 force @a[tag=ak.self,distance=..40,limit=1]
 			}
 		}
 	}
