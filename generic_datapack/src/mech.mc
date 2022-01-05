@@ -239,7 +239,7 @@ function reset {
 		# Reset animation time
 		scoreboard players set @s aj.frame 0
 		scoreboard players operation .this aj.id = @s aj.id
-		execute as @e[type=minecraft:area_effect_cloud,tag=aj.mech.bone,distance=..30] if score @s aj.id = .this aj.id run {
+		execute as @e[type=minecraft:area_effect_cloud,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 			tp @s[tag=aj.mech.bone.body] ^-0.026 ^2.629 ^0.939
 			tp @s[tag=aj.mech.bone.seat] ^-0.022 ^1.958 ^0.369
 			tp @s[tag=aj.mech.bone.left_arm] ^1.849 ^3.019 ^-0.303
@@ -255,7 +255,7 @@ function reset {
 			execute store result score .calc aj.i run data get entity @s Air
 			execute store result entity @s Air short 1 run scoreboard players add .calc aj.i 1
 		}
-		execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..30] if score @s aj.id = .this aj.id run {
+		execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 			data modify entity @s[tag=aj.mech.bone.body] Pose.Head set value [-180f,0f,180f]
 			data modify entity @s[tag=aj.mech.bone.seat] Pose.Head set value [-180f,0f,180f]
 			data modify entity @s[tag=aj.mech.bone.left_arm] Pose.Head set value [-180f,0f,180f]
@@ -3009,22 +3009,22 @@ dir animations {
 			# Play scripts as root entity if scripts enabled
 			execute if score .noScripts aj.i matches 0 run {
 				execute if score .this aj.frame matches 4 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 15 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 29 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 43 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
-				execute if score .this aj.frame matches 56 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+				execute if score .this aj.frame matches 55 run {
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 73 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 			}
 			# Increment frame
@@ -13146,22 +13146,22 @@ dir animations {
 			# Play scripts as root entity if scripts enabled
 			execute if score .noScripts aj.i matches 0 run {
 				execute if score .this aj.frame matches 4 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 15 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 29 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 43 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 57 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 73 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 			}
 			# Increment frame
@@ -14829,44 +14829,44 @@ dir animations {
 					}
 					execute if entity @s[tag=aj.mech.bone.jetpack] run {
 						execute if score .this aj.frame matches 0..7 run {
-							execute if score .this aj.frame matches 0 run tp @s ^-0.00093 ^2.6934299999999993 ^-1.50446 ~ ~
-							execute if score .this aj.frame matches 1 run tp @s ^-0.02559 ^2.6939399999999996 ^-1.49807 ~ ~
-							execute if score .this aj.frame matches 2 run tp @s ^-0.03747 ^2.7077099999999996 ^-1.52363 ~ ~
-							execute if score .this aj.frame matches 3 run tp @s ^-0.02981 ^2.6939 ^-1.49594 ~ ~
-							execute if score .this aj.frame matches 4 run tp @s ^-0.02406 ^2.69085 ^-1.4922 ~ ~
-							execute if score .this aj.frame matches 5 run tp @s ^-0.053 ^2.6936099999999996 ^-1.51915 ~ ~
-							execute if score .this aj.frame matches 6 run tp @s ^-0.00845 ^2.7054399999999994 ^-1.53883 ~ ~
-							execute if score .this aj.frame matches 7 run tp @s ^-0.04207 ^2.70657 ^-1.5205 ~ ~
+							execute if score .this aj.frame matches 0 run tp @s ^-0.04244 ^2.7033499999999995 ^-1.5289 ~ ~
+							execute if score .this aj.frame matches 1 run tp @s ^-0.00481 ^2.6808899999999998 ^-1.52441 ~ ~
+							execute if score .this aj.frame matches 2 run tp @s ^-0.00457 ^2.68471 ^-1.52125 ~ ~
+							execute if score .this aj.frame matches 3 run tp @s ^-0.0428 ^2.69306 ^-1.52894 ~ ~
+							execute if score .this aj.frame matches 4 run tp @s ^-0.0087 ^2.6966199999999994 ^-1.54119 ~ ~
+							execute if score .this aj.frame matches 5 run tp @s ^-0.00626 ^2.7044299999999994 ^-1.53429 ~ ~
+							execute if score .this aj.frame matches 6 run tp @s ^-0.04429 ^2.6770299999999994 ^-1.52321 ~ ~
+							execute if score .this aj.frame matches 7 run tp @s ^-0.00287 ^2.6847899999999996 ^-1.51262 ~ ~
 						}
 						execute if score .this aj.frame matches 8..15 run {
-							execute if score .this aj.frame matches 8 run tp @s ^-0.05603 ^2.7019699999999993 ^-1.52981 ~ ~
-							execute if score .this aj.frame matches 9 run tp @s ^-0.0447 ^2.6822999999999997 ^-1.53908 ~ ~
-							execute if score .this aj.frame matches 10 run tp @s ^-0.04121 ^2.6991999999999994 ^-1.52924 ~ ~
-							execute if score .this aj.frame matches 11 run tp @s ^-0.04228 ^2.6983999999999995 ^-1.51989 ~ ~
-							execute if score .this aj.frame matches 12 run tp @s ^-0.00951 ^2.67676 ^-1.52684 ~ ~
-							execute if score .this aj.frame matches 13 run tp @s ^-0.03179 ^2.7032799999999995 ^-1.48671 ~ ~
-							execute if score .this aj.frame matches 14 run tp @s ^-0.00257 ^2.6801499999999994 ^-1.5269 ~ ~
-							execute if score .this aj.frame matches 15 run tp @s ^-0.01277 ^2.67957 ^-1.53998 ~ ~
+							execute if score .this aj.frame matches 8 run tp @s ^-0.00356 ^2.69496 ^-1.5264 ~ ~
+							execute if score .this aj.frame matches 9 run tp @s ^-0.0323 ^2.68654 ^-1.52074 ~ ~
+							execute if score .this aj.frame matches 10 run tp @s ^-0.02362 ^2.7036299999999995 ^-1.54083 ~ ~
+							execute if score .this aj.frame matches 11 run tp @s ^-0.05784 ^2.6945799999999993 ^-1.48416 ~ ~
+							execute if score .this aj.frame matches 12 run tp @s ^-0.03642 ^2.68527 ^-1.53068 ~ ~
+							execute if score .this aj.frame matches 13 run tp @s ^-0.0102 ^2.69583 ^-1.52474 ~ ~
+							execute if score .this aj.frame matches 14 run tp @s ^-0.05112 ^2.6879299999999997 ^-1.52172 ~ ~
+							execute if score .this aj.frame matches 15 run tp @s ^-0.02468 ^2.68382 ^-1.52076 ~ ~
 						}
 						execute if score .this aj.frame matches 16..23 run {
-							execute if score .this aj.frame matches 16 run tp @s ^-0.04819 ^2.6846999999999994 ^-1.51337 ~ ~
-							execute if score .this aj.frame matches 17 run tp @s ^-0.05972 ^2.70465 ^-1.50612 ~ ~
-							execute if score .this aj.frame matches 18 run tp @s ^-0.04476 ^2.68614 ^-1.48282 ~ ~
-							execute if score .this aj.frame matches 19 run tp @s ^-0.03164 ^2.6821899999999994 ^-1.53095 ~ ~
-							execute if score .this aj.frame matches 20 run tp @s ^-0.06177 ^2.6834999999999996 ^-1.53299 ~ ~
-							execute if score .this aj.frame matches 21 run tp @s ^-0.01839 ^2.7053599999999998 ^-1.49474 ~ ~
-							execute if score .this aj.frame matches 22 run tp @s ^-0.02035 ^2.70024 ^-1.50629 ~ ~
-							execute if score .this aj.frame matches 23 run tp @s ^-0.03926 ^2.67875 ^-1.52366 ~ ~
+							execute if score .this aj.frame matches 16 run tp @s ^-0.06055 ^2.68853 ^-1.52737 ~ ~
+							execute if score .this aj.frame matches 17 run tp @s ^-0.01616 ^2.6787899999999993 ^-1.5123 ~ ~
+							execute if score .this aj.frame matches 18 run tp @s ^-0.01863 ^2.6979699999999998 ^-1.50409 ~ ~
+							execute if score .this aj.frame matches 19 run tp @s ^-0.05527 ^2.6817699999999993 ^-1.49485 ~ ~
+							execute if score .this aj.frame matches 20 run tp @s ^-0.05651 ^2.68576 ^-1.48113 ~ ~
+							execute if score .this aj.frame matches 21 run tp @s ^-0.00153 ^2.69841 ^-1.53184 ~ ~
+							execute if score .this aj.frame matches 22 run tp @s ^-0.03755 ^2.69107 ^-1.51991 ~ ~
+							execute if score .this aj.frame matches 23 run tp @s ^-0.02767 ^2.67795 ^-1.49829 ~ ~
 						}
 						execute if score .this aj.frame matches 24..31 run {
-							execute if score .this aj.frame matches 24 run tp @s ^-0.05379 ^2.70599 ^-1.52204 ~ ~
-							execute if score .this aj.frame matches 25 run tp @s ^-0.01464 ^2.68091 ^-1.48045 ~ ~
-							execute if score .this aj.frame matches 26 run tp @s ^-0.03542 ^2.7057199999999995 ^-1.49197 ~ ~
-							execute if score .this aj.frame matches 27 run tp @s ^-0.02737 ^2.70418 ^-1.52837 ~ ~
-							execute if score .this aj.frame matches 28 run tp @s ^-0.02947 ^2.6861099999999993 ^-1.4967 ~ ~
-							execute if score .this aj.frame matches 29 run tp @s ^-0.05197 ^2.68565 ^-1.52698 ~ ~
-							execute if score .this aj.frame matches 30 run tp @s ^-0.00807 ^2.7076599999999997 ^-1.52281 ~ ~
-							execute if score .this aj.frame matches 31 run tp @s ^-0.01616 ^2.69604 ^-1.50131 ~ ~
+							execute if score .this aj.frame matches 24 run tp @s ^-0.02453 ^2.6816899999999997 ^-1.53566 ~ ~
+							execute if score .this aj.frame matches 25 run tp @s ^-0.03132 ^2.6945499999999996 ^-1.5072 ~ ~
+							execute if score .this aj.frame matches 26 run tp @s ^-0.01345 ^2.70181 ^-1.48425 ~ ~
+							execute if score .this aj.frame matches 27 run tp @s ^-0.03461 ^2.67854 ^-1.51242 ~ ~
+							execute if score .this aj.frame matches 28 run tp @s ^-0.00642 ^2.6824499999999993 ^-1.50999 ~ ~
+							execute if score .this aj.frame matches 29 run tp @s ^-0.00161 ^2.69771 ^-1.48577 ~ ~
+							execute if score .this aj.frame matches 30 run tp @s ^-0.00765 ^2.6872099999999994 ^-1.49324 ~ ~
+							execute if score .this aj.frame matches 31 run tp @s ^-0.01337 ^2.6868499999999997 ^-1.50315 ~ ~
 						}
 					}
 					execute store result entity @s Air short 1 run scoreboard players get .this aj.frame
@@ -15337,44 +15337,44 @@ dir animations {
 					}
 					execute if entity @s[tag=aj.mech.bone.jetpack] run {
 						execute if score .this aj.frame matches 0..7 run {
-							execute if score .this aj.frame matches 0 run data modify entity @s Pose.Head set value [-178.13010585095725f,0.8008213652746817f,-178.4910071576013f]
-							execute if score .this aj.frame matches 1 run data modify entity @s Pose.Head set value [179.46365461462085f,-1.0358834647915225f,-178.00487738784278f]
-							execute if score .this aj.frame matches 2 run data modify entity @s Pose.Head set value [-179.74736548194096f,0.8920353005267261f,179.66114794570314f]
-							execute if score .this aj.frame matches 3 run data modify entity @s Pose.Head set value [178.2978711118677f,1.9182382598849306f,179.83146876676642f]
-							execute if score .this aj.frame matches 4 run data modify entity @s Pose.Head set value [178.25346697275867f,-0.18654139049175913f,179.57532930207515f]
-							execute if score .this aj.frame matches 5 run data modify entity @s Pose.Head set value [179.99587973529952f,-1.4427104062213698f,178.713543203221f]
-							execute if score .this aj.frame matches 6 run data modify entity @s Pose.Head set value [-179.80965992641694f,0.8781325878629893f,179.88845047958688f]
-							execute if score .this aj.frame matches 7 run data modify entity @s Pose.Head set value [-178.0262198233059f,0.766352414551263f,179.65197937397264f]
+							execute if score .this aj.frame matches 0 run data modify entity @s Pose.Head set value [-179.12330348772917f,0.9557039341281016f,-178.18645283790005f]
+							execute if score .this aj.frame matches 1 run data modify entity @s Pose.Head set value [178.5108610914379f,0.08922417424017576f,-178.9432475094642f]
+							execute if score .this aj.frame matches 2 run data modify entity @s Pose.Head set value [-179.5148646485087f,-1.3781753707012743f,179.6848584058237f]
+							execute if score .this aj.frame matches 3 run data modify entity @s Pose.Head set value [-178.88504013265108f,-1.208577847959589f,178.8098407869019f]
+							execute if score .this aj.frame matches 4 run data modify entity @s Pose.Head set value [-179.65788523468188f,1.003416911626443f,178.20703203869493f]
+							execute if score .this aj.frame matches 5 run data modify entity @s Pose.Head set value [179.71762701355266f,0.2209574974865872f,178.3898601620839f]
+							execute if score .this aj.frame matches 6 run data modify entity @s Pose.Head set value [179.48990029540772f,-1.6390481269981716f,-178.06549630231078f]
+							execute if score .this aj.frame matches 7 run data modify entity @s Pose.Head set value [-179.27069368754096f,0.4276010150272942f,178.554915863184f]
 						}
 						execute if score .this aj.frame matches 8..15 run {
-							execute if score .this aj.frame matches 8 run data modify entity @s Pose.Head set value [-179.4835137444761f,1.4557776349071547f,-178.80907472989358f]
-							execute if score .this aj.frame matches 9 run data modify entity @s Pose.Head set value [178.58969615749822f,1.9294963106430918f,-179.2356879379015f]
-							execute if score .this aj.frame matches 10 run data modify entity @s Pose.Head set value [178.55916909959151f,-1.0901663221203561f,178.5841606919327f]
-							execute if score .this aj.frame matches 11 run data modify entity @s Pose.Head set value [178.64258827787103f,1.6329245120351261f,-178.28716000215204f]
-							execute if score .this aj.frame matches 12 run data modify entity @s Pose.Head set value [-179.10174550366585f,1.2599560876885278f,-179.9847049287404f]
-							execute if score .this aj.frame matches 13 run data modify entity @s Pose.Head set value [-178.8580857187318f,1.990406931349714f,-178.24462736805205f]
-							execute if score .this aj.frame matches 14 run data modify entity @s Pose.Head set value [179.71640249903456f,1.9473419643941765f,-178.35995601407572f]
-							execute if score .this aj.frame matches 15 run data modify entity @s Pose.Head set value [-178.66477319280864f,-1.9303078879298279f,-179.81102293189664f]
+							execute if score .this aj.frame matches 8 run data modify entity @s Pose.Head set value [179.84470134927318f,0.9705755817873677f,-179.0398270886007f]
+							execute if score .this aj.frame matches 9 run data modify entity @s Pose.Head set value [-179.45398707631142f,1.3433115132388658f,179.08014908031066f]
+							execute if score .this aj.frame matches 10 run data modify entity @s Pose.Head set value [-178.62301666530362f,-0.9921845218149529f,-179.21932943414689f]
+							execute if score .this aj.frame matches 11 run data modify entity @s Pose.Head set value [-178.8895759756217f,0.675824550961612f,-179.8788012289095f]
+							execute if score .this aj.frame matches 12 run data modify entity @s Pose.Head set value [179.33810616772507f,0.13438205140526086f,179.4025843050777f]
+							execute if score .this aj.frame matches 13 run data modify entity @s Pose.Head set value [-179.2876484600856f,-1.8012120480860436f,-179.33335258722713f]
+							execute if score .this aj.frame matches 14 run data modify entity @s Pose.Head set value [179.0332915815447f,1.056079029168179f,-179.20028505213148f]
+							execute if score .this aj.frame matches 15 run data modify entity @s Pose.Head set value [-179.596698765901f,-0.3160138927573053f,178.52909859301127f]
 						}
 						execute if score .this aj.frame matches 16..23 run {
-							execute if score .this aj.frame matches 16 run data modify entity @s Pose.Head set value [179.0527178142719f,1.6035817207140473f,-178.97932881987208f]
-							execute if score .this aj.frame matches 17 run data modify entity @s Pose.Head set value [-178.1674800667348f,-1.8077377903104705f,-179.565249627143f]
-							execute if score .this aj.frame matches 18 run data modify entity @s Pose.Head set value [178.70269695958294f,-0.149373798029136f,178.50730443932355f]
-							execute if score .this aj.frame matches 19 run data modify entity @s Pose.Head set value [179.96646475895247f,1.9666110254214197f,178.62422578044735f]
-							execute if score .this aj.frame matches 20 run data modify entity @s Pose.Head set value [-179.8995146365488f,-1.7702828134634665f,-179.59381631228575f]
-							execute if score .this aj.frame matches 21 run data modify entity @s Pose.Head set value [-179.27774264516916f,1.3259873088295968f,-179.2910708631013f]
-							execute if score .this aj.frame matches 22 run data modify entity @s Pose.Head set value [178.96889267927153f,1.4808119105510587f,-178.23079494012475f]
-							execute if score .this aj.frame matches 23 run data modify entity @s Pose.Head set value [178.7150606890444f,1.0489902701228808f,179.1612164290822f]
+							execute if score .this aj.frame matches 16 run data modify entity @s Pose.Head set value [-178.67306475903374f,0.258214736581678f,178.41238195066228f]
+							execute if score .this aj.frame matches 17 run data modify entity @s Pose.Head set value [178.0241154979354f,-0.9492283354291159f,-178.5975044285219f]
+							execute if score .this aj.frame matches 18 run data modify entity @s Pose.Head set value [-179.46378726776027f,-0.4631809994014103f,179.60289103890514f]
+							execute if score .this aj.frame matches 19 run data modify entity @s Pose.Head set value [-178.85990734888588f,-0.2534915778699256f,-179.5715852907926f]
+							execute if score .this aj.frame matches 20 run data modify entity @s Pose.Head set value [178.3893455579866f,0.8565751037735145f,-179.87928016763814f]
+							execute if score .this aj.frame matches 21 run data modify entity @s Pose.Head set value [179.22669382828872f,-1.6463729816029824f,-179.2156962939893f]
+							execute if score .this aj.frame matches 22 run data modify entity @s Pose.Head set value [178.49409573750705f,1.6323900297195546f,179.05350365388745f]
+							execute if score .this aj.frame matches 23 run data modify entity @s Pose.Head set value [-178.4523007162462f,-1.7327039018609274f,178.36004929781546f]
 						}
 						execute if score .this aj.frame matches 24..31 run {
-							execute if score .this aj.frame matches 24 run data modify entity @s Pose.Head set value [178.89053450921557f,1.9451846281508511f,-179.52643125281284f]
-							execute if score .this aj.frame matches 25 run data modify entity @s Pose.Head set value [-178.35343313487644f,1.400959724960372f,179.96117577460578f]
-							execute if score .this aj.frame matches 26 run data modify entity @s Pose.Head set value [178.32570971600657f,1.5764802284993626f,-179.758809326819f]
-							execute if score .this aj.frame matches 27 run data modify entity @s Pose.Head set value [-179.78670801410345f,0.4028479686669718f,178.22463793669286f]
-							execute if score .this aj.frame matches 28 run data modify entity @s Pose.Head set value [178.1837792925622f,0.8465947082491987f,-178.44156471548462f]
-							execute if score .this aj.frame matches 29 run data modify entity @s Pose.Head set value [-179.5141069709429f,1.6701181032357086f,-179.6409849580502f]
-							execute if score .this aj.frame matches 30 run data modify entity @s Pose.Head set value [178.0849272667287f,0.3884233732227065f,178.61993993427524f]
-							execute if score .this aj.frame matches 31 run data modify entity @s Pose.Head set value [-179.86744497489056f,-0.4066392744226876f,-178.7209306887679f]
+							execute if score .this aj.frame matches 24 run data modify entity @s Pose.Head set value [178.7714192934197f,-1.697890741773046f,179.0321157574259f]
+							execute if score .this aj.frame matches 25 run data modify entity @s Pose.Head set value [-179.64963513393485f,-0.15601837750742586f,178.285496737501f]
+							execute if score .this aj.frame matches 26 run data modify entity @s Pose.Head set value [178.12863927757186f,-1.4476336109860894f,178.0671357230039f]
+							execute if score .this aj.frame matches 27 run data modify entity @s Pose.Head set value [178.83024745810633f,1.0464146296956782f,-179.90719244287337f]
+							execute if score .this aj.frame matches 28 run data modify entity @s Pose.Head set value [179.26847498680846f,-0.46652429603788653f,178.03669300428336f]
+							execute if score .this aj.frame matches 29 run data modify entity @s Pose.Head set value [179.3671054664238f,-0.3379921526925457f,178.47908299502262f]
+							execute if score .this aj.frame matches 30 run data modify entity @s Pose.Head set value [179.78315309511447f,1.7066928468826443f,178.72413316091593f]
+							execute if score .this aj.frame matches 31 run data modify entity @s Pose.Head set value [178.5278406267804f,1.4950004486332924f,-179.81675408382216f]
 						}
 					}
 					tp @s ~ ~ ~ ~ ~
@@ -16866,6 +16866,9 @@ dir animations {
 			execute if score .noScripts aj.i matches 0 run {
 				execute if score .this aj.frame matches 0 run {
 					playsound minecraft:titan.off master @a ~ ~ ~ 0.1
+				}
+				execute if score .this aj.frame matches 13 run {
+					playsound minecraft:titan.on master @a ~ ~ ~ 0.1
 				}
 			}
 			# Increment frame
@@ -19100,10 +19103,10 @@ dir animations {
 			# Play scripts as root entity if scripts enabled
 			execute if score .noScripts aj.i matches 0 run {
 				execute if score .this aj.frame matches 15 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 27 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 			}
 			# Increment frame
@@ -20169,10 +20172,10 @@ dir animations {
 			# Play scripts as root entity if scripts enabled
 			execute if score .noScripts aj.i matches 0 run {
 				execute if score .this aj.frame matches 15 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 				execute if score .this aj.frame matches 27 run {
-					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2
+					execute positioned ~ ~-3.5 ~ run playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55
 				}
 			}
 			# Increment frame
@@ -23325,7 +23328,7 @@ dir animations {
 					playsound minecraft:titan.off master @a ~ ~ ~ 0.1 1.1
 				}
 				execute if score .this aj.frame matches 9 run {
-					playsound minecraft:titan.footstep master @a ~ ~ ~ 0.3 0.6
+					playsound minecraft:titan.footstep master @a ~ ~ ~ 0.55 0.6
 				}
 			}
 			# Increment frame
@@ -23709,29 +23712,29 @@ dir animations {
 					}
 					execute if entity @s[tag=aj.mech.bone.jetpack] run {
 						execute if score .this aj.frame matches 0..7 run {
-							execute if score .this aj.frame matches 0 run tp @s ^-0.05376 ^3.1182099999999995 ^-0.42014 ~ ~
-							execute if score .this aj.frame matches 1 run tp @s ^-0.02842 ^3.2091399999999997 ^-0.42985 ~ ~
-							execute if score .this aj.frame matches 2 run tp @s ^-0.00201 ^3.26131 ^-0.46242 ~ ~
-							execute if score .this aj.frame matches 3 run tp @s ^-0.00727 ^3.2550099999999995 ^-0.44012 ~ ~
-							execute if score .this aj.frame matches 4 run tp @s ^-0.0017 ^3.3215699999999995 ^-0.44733 ~ ~
-							execute if score .this aj.frame matches 5 run tp @s ^-0.03549 ^3.31292 ^-0.4611 ~ ~
-							execute if score .this aj.frame matches 6 run tp @s ^-0.01236 ^3.2685499999999994 ^-0.45037 ~ ~
-							execute if score .this aj.frame matches 7 run tp @s ^-0.06098 ^3.25751 ^-0.46845 ~ ~
+							execute if score .this aj.frame matches 0 run tp @s ^-0.02394 ^3.1749799999999997 ^-0.4255 ~ ~
+							execute if score .this aj.frame matches 1 run tp @s ^-0.03986 ^3.16416 ^-0.43817 ~ ~
+							execute if score .this aj.frame matches 2 run tp @s ^-0.03408 ^3.25429 ^-0.44283 ~ ~
+							execute if score .this aj.frame matches 3 run tp @s ^-0.05697 ^3.2625699999999993 ^-0.45888 ~ ~
+							execute if score .this aj.frame matches 4 run tp @s ^-0.00016 ^3.26398 ^-0.43635 ~ ~
+							execute if score .this aj.frame matches 5 run tp @s ^-0.05983 ^3.2709 ^-0.4214 ~ ~
+							execute if score .this aj.frame matches 6 run tp @s ^-0.04773 ^3.30391 ^-0.45146 ~ ~
+							execute if score .this aj.frame matches 7 run tp @s ^-0.01765 ^3.28027 ^-0.48026 ~ ~
 						}
 						execute if score .this aj.frame matches 8..15 run {
-							execute if score .this aj.frame matches 8 run tp @s ^-0.01956 ^3.2422699999999995 ^-0.46571 ~ ~
-							execute if score .this aj.frame matches 9 run tp @s ^-0.06092 ^3.19137 ^-0.45864 ~ ~
-							execute if score .this aj.frame matches 10 run tp @s ^-0.03803 ^3.17528 ^-0.45084 ~ ~
-							execute if score .this aj.frame matches 11 run tp @s ^-0.01358 ^3.0735399999999995 ^-0.41911 ~ ~
-							execute if score .this aj.frame matches 12 run tp @s ^-0.03955 ^3.03324 ^-0.47034 ~ ~
-							execute if score .this aj.frame matches 13 run tp @s ^-0.01063 ^2.99413 ^-0.43348 ~ ~
-							execute if score .this aj.frame matches 14 run tp @s ^-0.00422 ^3.0000399999999994 ^-0.42577 ~ ~
-							execute if score .this aj.frame matches 15 run tp @s ^-0.03508 ^2.9981799999999996 ^-0.45262 ~ ~
+							execute if score .this aj.frame matches 8 run tp @s ^-0.01467 ^3.2235699999999996 ^-0.45316 ~ ~
+							execute if score .this aj.frame matches 9 run tp @s ^-0.00752 ^3.21106 ^-0.4423 ~ ~
+							execute if score .this aj.frame matches 10 run tp @s ^-0.0493 ^3.1368399999999994 ^-0.44971 ~ ~
+							execute if score .this aj.frame matches 11 run tp @s ^-0.00231 ^3.1040399999999995 ^-0.46108 ~ ~
+							execute if score .this aj.frame matches 12 run tp @s ^-0.03146 ^3.0690799999999996 ^-0.4382 ~ ~
+							execute if score .this aj.frame matches 13 run tp @s ^-0.0533 ^3.0401099999999994 ^-0.43882 ~ ~
+							execute if score .this aj.frame matches 14 run tp @s ^-0.05279 ^3.0259599999999995 ^-0.42258 ~ ~
+							execute if score .this aj.frame matches 15 run tp @s ^-0.00211 ^2.9952199999999998 ^-0.43752 ~ ~
 						}
-						execute if score .this aj.frame matches 16 run tp @s ^-0.01577 ^2.9950599999999996 ^-0.42846 ~ ~
-						execute if score .this aj.frame matches 17 run tp @s ^-0.01572 ^3.03224 ^-0.46491 ~ ~
-						execute if score .this aj.frame matches 18 run tp @s ^-0.00518 ^3.0549 ^-0.46252 ~ ~
-						execute if score .this aj.frame matches 19 run tp @s ^-0.02562 ^3.07557 ^-0.4455 ~ ~
+						execute if score .this aj.frame matches 16 run tp @s ^-0.04504 ^2.99838 ^-0.44077 ~ ~
+						execute if score .this aj.frame matches 17 run tp @s ^-0.02449 ^3.0137899999999993 ^-0.44314 ~ ~
+						execute if score .this aj.frame matches 18 run tp @s ^-0.01269 ^3.0226099999999994 ^-0.42735 ~ ~
+						execute if score .this aj.frame matches 19 run tp @s ^-0.0342 ^3.09884 ^-0.47713 ~ ~
 					}
 					execute store result entity @s Air short 1 run scoreboard players get .this aj.frame
 				}

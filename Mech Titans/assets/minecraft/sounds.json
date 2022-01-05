@@ -223,5 +223,41 @@
     "titan.maver.slower":{
         "category": "master",
         "sounds":["titan/maver_slower_1","titan/maver_slower_2"]
+    },
+    "titan.maver.faster.1":{
+        "category": "master",
+        "sounds":["titan/maver_faster_1"]
+    },
+    "titan.maver.faster.2":{
+        "category": "master",
+        "sounds":["titan/maver_faster_2"]
+    },
+    "titan.maver.faster.3":{
+        "category": "master",
+        "sounds":["titan/maver_faster_3"]
+    },
+    "titan.maver.faster.4":{
+        "category": "master",
+        "sounds":["titan/maver_faster_4"]
+    },
+    "titan.maver.faster.5":{
+        "category": "master",
+        "sounds":["titan/maver_faster_5"]
+    },
+    "titan.maver.faster.6":{
+        "category": "master",
+        "sounds":["titan/maver_faster_6"]
+    },
+    "titan.maver.faster.7":{
+        "category": "master",
+        "sounds":["titan/maver_faster_7"]
+    },
+    "titan.maver.faster.8":{
+        "category": "master",
+        "sounds":["titan/maver_faster_8"]
+    },
+    "titan.crash":{
+        "category": "master",
+        "sounds":["titan/crash"]
     }
 }

@@ -3,8 +3,8 @@
     {
       "name": "lang-mc/stable",
       "remote": {
-        "type": "github",
-        "owner": "mc-build"
+        "type": "file",
+        "path": "C:/Users/Familie/Documents/lang-mc"
       }
     },
     {
@@ -20,6 +20,16 @@
         "type": "github",
         "owner": "Ancientkingg"
       }
+    },
+    {
+      "name": "lang-mc-math/main",
+      "remote": {
+        "type": "github",
+        "owner": "mc-build"
+      },
+      "load_after": [
+        "lang-mc"
+      ]
     }
   ],
   "libs": []

@@ -14,6 +14,8 @@ function load{
 	scoreboard players set #100000 ak.constant 100000
 	scoreboard players set #1000000 ak.constant 1000000
 
+
+	summon marker <%config.shulker_xyz%> {UUID:<%config.markerUUID_nbt%>}
 }
 
 function tick{
@@ -27,6 +29,64 @@ function tick{
 	}
 }
 
+function lock{
+	tag @s add ak.self
+	tag @e[type=!#input:not_lockable,distance=..40] remove ak.lock
+	execute at @s anchored eyes as @e[type=!#input:not_lockable,distance=..20] run{
+		execute facing entity @s feet anchored feet positioned ^ ^ ^1 rotated as @a[tag=ak.self,limit=1] positioned ^ ^ ^-1 if entity @a[tag=ak.self,distance=..0.5,limit=1] run tag @s add ak.locked_on
+	}
+	tag @e[type=!#input:not_lockable,distance=..20,sort=nearest,limit=1,tag=ak.locked_on] add ak.lock
+	tag @e[type=!#input:not_lockable,distance=..20] remove ak.locked_on
+
+	scoreboard players set rc ak.var 0
+
+	execute anchored eyes positioned ^ ^ ^ run{
+		scoreboard players add rc ak.var 1
+		execute unless block ~ ~ ~ #logic:passable run scoreboard players set rc ak.var 40
+		execute if score rc ak.var matches ..39 positioned ~-0.05 ~-0.05 ~-0.05 as @e[type=!#input:not_lockable,tag=!ak.self,dx=0,sort=nearest] if score rc ak.var matches ..39 positioned ~-0.85 ~-0.85 ~-0.85 if entity @s[dx=0] run{
+			scoreboard players set rc ak.var 40
+			execute unless entity @s[tag=ak.lock] run{
+				tag @e[type=!#input:not_lockable,distance=..50] remove ak.lock
+				tag @s add ak.lock
+			}
+		}
+		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
+	}
+	scoreboard players set rc ak.var 0
+	execute anchored eyes positioned ^ ^ ^ positioned ~ ~-1 ~ facing entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] feet positioned ~ ~1 ~ run{
+		scoreboard players add rc ak.var 1
+		execute unless block ~ ~ ~ #logic:passable run{
+			scoreboard players set rc ak.var 40
+			tag @e[type=!#input:not_lockable,distance=..50] remove ak.lock
+		}	
+		execute if score rc ak.var matches ..39 positioned ~-0.05 ~-0.05 ~-0.05 as @e[type=!#input:not_lockable,tag=!ak.self,dx=0,sort=nearest] if score rc ak.var matches ..39 positioned ~-0.85 ~-0.85 ~-0.85 if entity @s[dx=0] run{
+			scoreboard players set rc ak.var 40
+			execute positioned as @s positioned ^ ^-0.4 ^-3 run function input:particle_hitbox
+		}
+		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
+	}
+	# effect clear @e
+	# effect give @e[type=!#input:not_lockable,distance=..20,tag=ak.lock] glowing 1 1 true
+	tag @s remove ak.self
+}
+
+entities not_lockable{
+	minecraft:marker
+	minecraft:armor_stand
+	minecraft:item
+	minecraft:item_frame
+	minecraft:area_effect_cloud
+}
+
+function particle_hitbox{
+	LOOP(41,x){
+		LOOP(41,y){
+			!IF(x < 1 || y < 1 || x > 39 || y > 39){
+				execute anchored eyes run particle dust 1 0 0 0.3 ^<%(x-20)/60%> ^<%(y-20)/60%> ^1 0 0 0 0 1 force @a[tag=ak.self,distance=..40,limit=1]
+			}
+		}
+	}
+}
 
 function calc_dir{
 	data modify storage ak.wasd Motion set from entity @s Motion
@@ -159,16 +219,16 @@ LOOP(9,i){
 }
 
 predicate offhand{
-	  "condition": "minecraft:entity_properties",
-	  "entity": "this",
-	  "predicate": {
-	    "equipment": {
-	      "offhand": {
-	        "items": [
-	          "minecraft:warped_fungus_on_a_stick"
-	        ],
-	        "nbt": "{titan.input:1b}"
-	      }
-	    }
-	  }
-	}
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "equipment": {
+      "offhand": {
+        "items": [
+          "minecraft:warped_fungus_on_a_stick"
+        ],
+        "nbt": "{titan.input:1b}"
+      }
+    }
+  }
+}

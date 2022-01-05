@@ -11,10 +11,13 @@ function load{
 	scoreboard objectives add ak.collide dummy
 	scoreboard objectives add ak.speed dummy
 	scoreboard objectives add ak.lastSpeed dummy
+	scoreboard objectives add ak.fallTime dummy
 
 	scoreboard objectives add ak.sound.maver_faster dummy
 	scoreboard objectives add ak.sound.maver_ambient dummy
 	scoreboard objectives add ak.sound.maver_slower dummy
+	
+	scoreboard players set #-1 ak.var -1
 
 	forceload add -30000000 1602
 	setblock <%config.shulker_xyz%> yellow_shulker_box
@@ -26,6 +29,18 @@ function tick{
 	scoreboard players add @e[type=marker,tag=aj.mech.root,scores={ak.speed=..-1}] ak.speed 1
 
 	# gravity
+	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode,scores={ak.fallTime=1..}] at @s unless block ~ ~-0.2 ~ #logic:passable run{
+		execute if score @s ak.fallTime matches 10.. run{
+			function mech:animations/land/play
+			playsound minecraft:titan.crash master @a ~ ~ ~ 0.1 1
+			playsound minecraft:titan.crash master @a ~ ~ ~ 0.1 1.2
+			playsound minecraft:titan.crash master @a ~ ~ ~ 0.1 0.7
+			playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2 1
+			playsound minecraft:titan.footstep master @a ~ ~ ~ 0.4 0.75
+		}
+		scoreboard players set @s ak.fallTime 0
+	}
+	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s if block ~ ~-0.2 ~ #logic:passable run scoreboard players add @s ak.fallTime 1
 	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s if block ~ ~-0.2 ~ #logic:passable run tp @s ~ ~-0.2 ~
 	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s unless block ~ ~-0.2 ~ #logic:passable if block ~ ~0.05 ~ #logic:passable run tp @s ~ ~-0.01 ~
 	# going up 1 tall blocks
@@ -131,6 +146,7 @@ function mount{
 				} 
 				# deactivating maver mode
 				execute unless score #ifelse ak.var matches 1 at @s as @e[type=marker,tag=!aj.anim.isPlaying,tag=aj.mech.root,distance=..30,tag=!aj.mech.anim.on,tag=maver_mode] if score @s aj.id = #temp.id ak.var at @s run{
+					scoreboard players set @s ak.sound.maver_faster 0
 					function mech:animations/maver_off/play
 					playsound minecraft:titan.ai.maver.deactivate master @a ~ ~ ~ 0.15 0.95
 					tag @s remove maver_mode
@@ -159,7 +175,7 @@ function mount{
 				scoreboard players set up ak.collide 0
 				scoreboard players set down ak.collide 0
 				scoreboard players set rc ak.var 0
-				execute if score @s ak.speed matches 1.. run{
+				execute positioned ~ ~0.5 ~ if score @s ak.speed matches 1.. run{
 					scoreboard players add rc ak.var 1
 					execute unless block ~ ~ ~ #logic:passable run{
 						scoreboard players set rc ak.var 25
@@ -168,7 +184,7 @@ function mount{
 					execute unless score rc ak.var matches 25.. positioned ^ ^ ^0.1 run function $block
 				}
 				scoreboard players set rc ak.var 0
-				execute if score @s ak.speed matches ..-1 run{
+				execute positioned ~ ~0.5 ~ if score @s ak.speed matches ..-1 run{
 					scoreboard players add rc ak.var 1
 					execute unless block ~ ~ ~ #logic:passable run{
 						scoreboard players set rc ak.var 25
@@ -222,7 +238,14 @@ function mount{
 					scoreboard players set @s ak.speed 0
 					tp @s @s
 				}
-				
+				scoreboard players operation #temp ak.var = @s ak.lastSpeed
+				scoreboard players operation #temp ak.var -= @s ak.speed
+				execute if score #temp ak.var matches 5.. run{
+					playsound minecraft:titan.crash master @a ~ ~ ~ 0.3 1
+					playsound minecraft:titan.crash master @a ~ ~ ~ 0.2 1.2
+					playsound minecraft:titan.crash master @a ~ ~ ~ 0.2 0.7
+					playsound minecraft:titan.footstep master @a ~ ~ ~ 0.2 1.4
+				} 
 				execute unless score a ak.collide matches 1 if score a ak.wasd matches 1 run{
 					execute at @s run tp @s ^0.2 ^ ^ ~ ~
 				}
@@ -235,39 +258,53 @@ function mount{
 				execute unless score s ak.collide matches 1 if score s ak.wasd matches 1 run{
 					scoreboard players remove @s[scores={ak.speed=-37..}] ak.speed 2
 				}
-				execute if score @s ak.speed > @s ak.lastSpeed unless score @s ak.speed matches 38.. run{
+
+				# make speed absolute so sound control works in reverse as well
+				scoreboard players operation #tempspeed ak.var = @s ak.speed
+				execute if score #tempspeed ak.var matches ..-1 run scoreboard players operation #tempspeed ak.var *= #-1 ak.var
+				execute if score @s ak.lastSpeed matches ..-1 run scoreboard players operation @s ak.lastSpeed *= #-1 ak.var
+
+				# what to do when accelerating
+				execute if score #tempspeed ak.var > @s ak.lastSpeed unless score #tempspeed ak.var matches 38.. run{
+					# add tag so slow down sound only plays after acceleration
 					tag @s add maver.notslower
-					execute unless score @s ak.sound.maver_faster matches 1.. run playsound minecraft:titan.maver.faster master @a ~ ~ ~ 0.4
+					# splitting up sounds to make cutting out better
+					execute unless score @s ak.sound.maver_faster matches 1.. run playsound minecraft:titan.maver.faster.1 master @a ~ ~ ~ 0.3
 					execute unless score @s ak.sound.maver_faster matches 1.. run scoreboard players set @s ak.sound.maver_faster 110
 					schedule 1t replace{
 						scoreboard players remove @e[type=marker,scores={ak.sound.maver_faster=1..}] ak.sound.maver_faster 1
+						LOOP(7,i){
+							execute at @e[type=marker,scores={ak.sound.maver_faster=<%110-(i+1)*12%>}] run playsound minecraft:titan.maver.faster.<%i+2%> master @a ~ ~ ~ 0.3
+						}
 						execute if entity @e[type=marker,scores={ak.sound.maver_faster=1..}] run schedule function $block 1t replace
 					}
 				}
-				execute if score @s[tag=maver.notslower] ak.speed <= @s ak.lastSpeed if score w ak.wasd matches 0 if score s ak.wasd matches 0 run{
+				# what to do when deaccelerating
+				execute if entity @s[tag=maver.notslower] if score #tempspeed ak.var <= @s ak.lastSpeed if score w ak.wasd matches 0 if score s ak.wasd matches 0 run{
 					tag @s remove maver.notslower
 					execute unless score @s ak.sound.maver_slower matches 1.. run playsound minecraft:titan.maver.slower master @a ~ ~ ~ 0.4
-					execute unless score @s ak.sound.maver_slower matches 1.. run scoreboard players set @s ak.sound.maver_slower 110
+					execute unless score @s ak.sound.maver_slower matches 1.. run scoreboard players set @s ak.sound.maver_faster 0
+					execute unless score @s ak.sound.maver_slower matches 1.. run scoreboard players set @s ak.sound.maver_slower 60
 					schedule 1t replace{
 						scoreboard players remove @e[type=marker,scores={ak.sound.maver_slower=1..}] ak.sound.maver_slower 1
 						execute if entity @e[type=marker,scores={ak.sound.maver_slower=1..}] run schedule function $block 1t replace
 					}
 				}
-				execute if score @s ak.speed matches 34.. run{
+				# reach topspeed so cant accelerate anymore so play ambient sound
+				execute if score #tempspeed ak.var matches 34.. run{
 					tag @s add maver.notslower
 					execute unless score @s ak.sound.maver_ambient matches 1.. run playsound minecraft:titan.maver.ambient master @a ~ ~ ~ 0.4
-					execute unless score @s ak.sound.maver_ambient matches 1.. run scoreboard players set @s ak.sound.maver_ambient 70
+					execute unless score @s ak.sound.maver_ambient matches 1.. run scoreboard players set @s ak.sound.maver_ambient 35
 					schedule 1t replace{
 						scoreboard players remove @e[type=marker,scores={ak.sound.maver_ambient=1..}] ak.sound.maver_ambient 1
 						execute if entity @e[type=marker,scores={ak.sound.maver_ambient=1..}] run schedule function $block 1t replace
 					}
 				}
+				# acceleration
 				execute at @s run{
-					LOOP(60,i){
-						execute if score @s ak.speed matches <%i%> run tp @s ^ ^ ^<%i/60%> ~ ~
-						execute if score @s ak.speed matches -<%i%> run tp @s ^ ^ ^-<%i/60%> ~ ~
+					BST(@s ak.speed, -60, 60, i) run{
+						tp @s ^ ^ ^<%i/60%> ~ ~
 					}
-					
 				}
 				execute if entity @s[tag=!aj.anim.isPlaying] run{
 					tag @s remove ak.isAnim
