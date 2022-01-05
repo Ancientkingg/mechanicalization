@@ -195,7 +195,7 @@ dir set_variant {
 	function light_on {
 		execute (if entity @s[tag=aj.mech.root] at @s) {
 			scoreboard players operation .this aj.id = @s aj.id
-			execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				data modify entity @s[tag=aj.mech.bone.body] ArmorItems[-1].tag.CustomModelData set value 1
 			}
 		} else {
@@ -205,7 +205,7 @@ dir set_variant {
 	function light_off {
 		execute (if entity @s[tag=aj.mech.root] at @s) {
 			scoreboard players operation .this aj.id = @s aj.id
-			execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				data modify entity @s[tag=aj.mech.bone.body] ArmorItems[-1].tag.CustomModelData set value 13
 			}
 		} else {
@@ -239,8 +239,7 @@ function reset {
 		# Reset animation time
 		scoreboard players set @s aj.frame 0
 		scoreboard players operation .this aj.id = @s aj.id
-		execute as @e[type=minecraft:area_effect_cloud,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
-			tp @s[tag=aj.mech.bone.mech] ^0 ^2.906 ^-0.062
+		execute as @e[type=minecraft:area_effect_cloud,tag=aj.mech.bone,distance=..30] if score @s aj.id = .this aj.id run {
 			tp @s[tag=aj.mech.bone.body] ^-0.026 ^2.629 ^0.939
 			tp @s[tag=aj.mech.bone.seat] ^-0.022 ^1.958 ^0.369
 			tp @s[tag=aj.mech.bone.left_arm] ^1.849 ^3.019 ^-0.303
@@ -256,8 +255,7 @@ function reset {
 			execute store result score .calc aj.i run data get entity @s Air
 			execute store result entity @s Air short 1 run scoreboard players add .calc aj.i 1
 		}
-		execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
-			data modify entity @s[tag=aj.mech.bone.mech] Pose.Head set value [-180f,0f,180f]
+		execute as @e[type=minecraft:armor_stand,tag=aj.mech.bone,distance=..30] if score @s aj.id = .this aj.id run {
 			data modify entity @s[tag=aj.mech.bone.body] Pose.Head set value [-180f,0f,180f]
 			data modify entity @s[tag=aj.mech.bone.seat] Pose.Head set value [-180f,0f,180f]
 			data modify entity @s[tag=aj.mech.bone.left_arm] Pose.Head set value [-180f,0f,180f]
@@ -320,8 +318,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.walking_animation
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -336,8 +334,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.walking_animation
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -382,7 +380,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -3057,8 +3055,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.walking_a
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -3073,8 +3071,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.walking_a
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -3119,7 +3117,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -6757,8 +6755,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.walking_d
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -6773,8 +6771,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.walking_d
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -6819,7 +6817,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -10457,8 +10455,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.walking_s
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -10473,8 +10471,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.walking_s
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -10519,7 +10517,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -13194,8 +13192,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.idle_on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -13210,8 +13208,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.idle_on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -13256,7 +13254,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -14302,8 +14300,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.jetpack_on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -14318,8 +14316,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.jetpack_on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -14364,7 +14362,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -14831,44 +14829,44 @@ dir animations {
 					}
 					execute if entity @s[tag=aj.mech.bone.jetpack] run {
 						execute if score .this aj.frame matches 0..7 run {
-							execute if score .this aj.frame matches 0 run tp @s ^-0.00757 ^2.6785999999999994 ^-1.5001 ~ ~
-							execute if score .this aj.frame matches 1 run tp @s ^-0.01048 ^2.6803299999999997 ^-1.48703 ~ ~
-							execute if score .this aj.frame matches 2 run tp @s ^-0.01923 ^2.7007199999999996 ^-1.49387 ~ ~
-							execute if score .this aj.frame matches 3 run tp @s ^-0.0546 ^2.6897199999999994 ^-1.48963 ~ ~
-							execute if score .this aj.frame matches 4 run tp @s ^-0.04014 ^2.6868 ^-1.53921 ~ ~
-							execute if score .this aj.frame matches 5 run tp @s ^-0.03343 ^2.68842 ^-1.5207 ~ ~
-							execute if score .this aj.frame matches 6 run tp @s ^-0.02895 ^2.6875999999999998 ^-1.52194 ~ ~
-							execute if score .this aj.frame matches 7 run tp @s ^-0.02673 ^2.7013099999999994 ^-1.53194 ~ ~
+							execute if score .this aj.frame matches 0 run tp @s ^-0.00093 ^2.6934299999999993 ^-1.50446 ~ ~
+							execute if score .this aj.frame matches 1 run tp @s ^-0.02559 ^2.6939399999999996 ^-1.49807 ~ ~
+							execute if score .this aj.frame matches 2 run tp @s ^-0.03747 ^2.7077099999999996 ^-1.52363 ~ ~
+							execute if score .this aj.frame matches 3 run tp @s ^-0.02981 ^2.6939 ^-1.49594 ~ ~
+							execute if score .this aj.frame matches 4 run tp @s ^-0.02406 ^2.69085 ^-1.4922 ~ ~
+							execute if score .this aj.frame matches 5 run tp @s ^-0.053 ^2.6936099999999996 ^-1.51915 ~ ~
+							execute if score .this aj.frame matches 6 run tp @s ^-0.00845 ^2.7054399999999994 ^-1.53883 ~ ~
+							execute if score .this aj.frame matches 7 run tp @s ^-0.04207 ^2.70657 ^-1.5205 ~ ~
 						}
 						execute if score .this aj.frame matches 8..15 run {
-							execute if score .this aj.frame matches 8 run tp @s ^-0.00165 ^2.6956499999999997 ^-1.52421 ~ ~
-							execute if score .this aj.frame matches 9 run tp @s ^-0.00608 ^2.6838999999999995 ^-1.49079 ~ ~
-							execute if score .this aj.frame matches 10 run tp @s ^-0.04206 ^2.69454 ^-1.5326 ~ ~
-							execute if score .this aj.frame matches 11 run tp @s ^-0.0451 ^2.6950899999999995 ^-1.48491 ~ ~
-							execute if score .this aj.frame matches 12 run tp @s ^-0.01667 ^2.68217 ^-1.51892 ~ ~
-							execute if score .this aj.frame matches 13 run tp @s ^-0.02871 ^2.6867899999999993 ^-1.48341 ~ ~
-							execute if score .this aj.frame matches 14 run tp @s ^-0.0423 ^2.6887 ^-1.4893 ~ ~
-							execute if score .this aj.frame matches 15 run tp @s ^-0.01809 ^2.6942699999999995 ^-1.48633 ~ ~
+							execute if score .this aj.frame matches 8 run tp @s ^-0.05603 ^2.7019699999999993 ^-1.52981 ~ ~
+							execute if score .this aj.frame matches 9 run tp @s ^-0.0447 ^2.6822999999999997 ^-1.53908 ~ ~
+							execute if score .this aj.frame matches 10 run tp @s ^-0.04121 ^2.6991999999999994 ^-1.52924 ~ ~
+							execute if score .this aj.frame matches 11 run tp @s ^-0.04228 ^2.6983999999999995 ^-1.51989 ~ ~
+							execute if score .this aj.frame matches 12 run tp @s ^-0.00951 ^2.67676 ^-1.52684 ~ ~
+							execute if score .this aj.frame matches 13 run tp @s ^-0.03179 ^2.7032799999999995 ^-1.48671 ~ ~
+							execute if score .this aj.frame matches 14 run tp @s ^-0.00257 ^2.6801499999999994 ^-1.5269 ~ ~
+							execute if score .this aj.frame matches 15 run tp @s ^-0.01277 ^2.67957 ^-1.53998 ~ ~
 						}
 						execute if score .this aj.frame matches 16..23 run {
-							execute if score .this aj.frame matches 16 run tp @s ^-0.04105 ^2.7019399999999996 ^-1.52066 ~ ~
-							execute if score .this aj.frame matches 17 run tp @s ^-0.05678 ^2.67999 ^-1.49566 ~ ~
-							execute if score .this aj.frame matches 18 run tp @s ^-0.01531 ^2.7052699999999996 ^-1.53992 ~ ~
-							execute if score .this aj.frame matches 19 run tp @s ^-0.00546 ^2.6918799999999994 ^-1.48763 ~ ~
-							execute if score .this aj.frame matches 20 run tp @s ^-0.0121 ^2.68591 ^-1.52039 ~ ~
-							execute if score .this aj.frame matches 21 run tp @s ^-0.018 ^2.70005 ^-1.53147 ~ ~
-							execute if score .this aj.frame matches 22 run tp @s ^-0.0524 ^2.6934999999999993 ^-1.5315 ~ ~
-							execute if score .this aj.frame matches 23 run tp @s ^-0.01478 ^2.6795799999999996 ^-1.49823 ~ ~
+							execute if score .this aj.frame matches 16 run tp @s ^-0.04819 ^2.6846999999999994 ^-1.51337 ~ ~
+							execute if score .this aj.frame matches 17 run tp @s ^-0.05972 ^2.70465 ^-1.50612 ~ ~
+							execute if score .this aj.frame matches 18 run tp @s ^-0.04476 ^2.68614 ^-1.48282 ~ ~
+							execute if score .this aj.frame matches 19 run tp @s ^-0.03164 ^2.6821899999999994 ^-1.53095 ~ ~
+							execute if score .this aj.frame matches 20 run tp @s ^-0.06177 ^2.6834999999999996 ^-1.53299 ~ ~
+							execute if score .this aj.frame matches 21 run tp @s ^-0.01839 ^2.7053599999999998 ^-1.49474 ~ ~
+							execute if score .this aj.frame matches 22 run tp @s ^-0.02035 ^2.70024 ^-1.50629 ~ ~
+							execute if score .this aj.frame matches 23 run tp @s ^-0.03926 ^2.67875 ^-1.52366 ~ ~
 						}
 						execute if score .this aj.frame matches 24..31 run {
-							execute if score .this aj.frame matches 24 run tp @s ^-0.02148 ^2.68081 ^-1.5297 ~ ~
-							execute if score .this aj.frame matches 25 run tp @s ^-0.05501 ^2.7009799999999995 ^-1.53072 ~ ~
-							execute if score .this aj.frame matches 26 run tp @s ^-0.00117 ^2.6965899999999996 ^-1.53431 ~ ~
-							execute if score .this aj.frame matches 27 run tp @s ^-0.01644 ^2.6841999999999997 ^-1.50072 ~ ~
-							execute if score .this aj.frame matches 28 run tp @s ^-0.02686 ^2.6826499999999998 ^-1.52976 ~ ~
-							execute if score .this aj.frame matches 29 run tp @s ^-0.04241 ^2.67666 ^-1.52004 ~ ~
-							execute if score .this aj.frame matches 30 run tp @s ^-0.011 ^2.6861799999999993 ^-1.5141 ~ ~
-							execute if score .this aj.frame matches 31 run tp @s ^-0.00027 ^2.6782899999999996 ^-1.51869 ~ ~
+							execute if score .this aj.frame matches 24 run tp @s ^-0.05379 ^2.70599 ^-1.52204 ~ ~
+							execute if score .this aj.frame matches 25 run tp @s ^-0.01464 ^2.68091 ^-1.48045 ~ ~
+							execute if score .this aj.frame matches 26 run tp @s ^-0.03542 ^2.7057199999999995 ^-1.49197 ~ ~
+							execute if score .this aj.frame matches 27 run tp @s ^-0.02737 ^2.70418 ^-1.52837 ~ ~
+							execute if score .this aj.frame matches 28 run tp @s ^-0.02947 ^2.6861099999999993 ^-1.4967 ~ ~
+							execute if score .this aj.frame matches 29 run tp @s ^-0.05197 ^2.68565 ^-1.52698 ~ ~
+							execute if score .this aj.frame matches 30 run tp @s ^-0.00807 ^2.7076599999999997 ^-1.52281 ~ ~
+							execute if score .this aj.frame matches 31 run tp @s ^-0.01616 ^2.69604 ^-1.50131 ~ ~
 						}
 					}
 					execute store result entity @s Air short 1 run scoreboard players get .this aj.frame
@@ -15339,44 +15337,44 @@ dir animations {
 					}
 					execute if entity @s[tag=aj.mech.bone.jetpack] run {
 						execute if score .this aj.frame matches 0..7 run {
-							execute if score .this aj.frame matches 0 run data modify entity @s Pose.Head set value [178.55375687002106f,1.040244839464393f,179.98639935485897f]
-							execute if score .this aj.frame matches 1 run data modify entity @s Pose.Head set value [-179.40410657337085f,-0.09360817582271526f,178.72092583400823f]
-							execute if score .this aj.frame matches 2 run data modify entity @s Pose.Head set value [-179.45598078775978f,1.2922979814547038f,-178.19594216918534f]
-							execute if score .this aj.frame matches 3 run data modify entity @s Pose.Head set value [178.42126420576733f,1.9699057994890263f,-178.60657989567585f]
-							execute if score .this aj.frame matches 4 run data modify entity @s Pose.Head set value [179.81210824287754f,1.7711849257144723f,178.62052600629977f]
-							execute if score .this aj.frame matches 5 run data modify entity @s Pose.Head set value [-178.51486971482763f,-0.4849623721209255f,178.24441733887514f]
-							execute if score .this aj.frame matches 6 run data modify entity @s Pose.Head set value [-178.0802777130873f,-0.23371125123926825f,179.39817007877173f]
-							execute if score .this aj.frame matches 7 run data modify entity @s Pose.Head set value [179.82222461528323f,-0.1897147984130083f,179.63805654725405f]
+							execute if score .this aj.frame matches 0 run data modify entity @s Pose.Head set value [-178.13010585095725f,0.8008213652746817f,-178.4910071576013f]
+							execute if score .this aj.frame matches 1 run data modify entity @s Pose.Head set value [179.46365461462085f,-1.0358834647915225f,-178.00487738784278f]
+							execute if score .this aj.frame matches 2 run data modify entity @s Pose.Head set value [-179.74736548194096f,0.8920353005267261f,179.66114794570314f]
+							execute if score .this aj.frame matches 3 run data modify entity @s Pose.Head set value [178.2978711118677f,1.9182382598849306f,179.83146876676642f]
+							execute if score .this aj.frame matches 4 run data modify entity @s Pose.Head set value [178.25346697275867f,-0.18654139049175913f,179.57532930207515f]
+							execute if score .this aj.frame matches 5 run data modify entity @s Pose.Head set value [179.99587973529952f,-1.4427104062213698f,178.713543203221f]
+							execute if score .this aj.frame matches 6 run data modify entity @s Pose.Head set value [-179.80965992641694f,0.8781325878629893f,179.88845047958688f]
+							execute if score .this aj.frame matches 7 run data modify entity @s Pose.Head set value [-178.0262198233059f,0.766352414551263f,179.65197937397264f]
 						}
 						execute if score .this aj.frame matches 8..15 run {
-							execute if score .this aj.frame matches 8 run data modify entity @s Pose.Head set value [-179.9180477570487f,1.068549181396193f,-179.93305958264116f]
-							execute if score .this aj.frame matches 9 run data modify entity @s Pose.Head set value [178.59234505123302f,-1.4375560542552213f,-179.90813804410948f]
-							execute if score .this aj.frame matches 10 run data modify entity @s Pose.Head set value [178.96717992203222f,-0.6571973318201465f,179.72020005060978f]
-							execute if score .this aj.frame matches 11 run data modify entity @s Pose.Head set value [-179.88565259336892f,-0.32921532984259294f,-179.14558332239992f]
-							execute if score .this aj.frame matches 12 run data modify entity @s Pose.Head set value [178.66473751266267f,-1.1615140290505486f,-178.2097206486117f]
-							execute if score .this aj.frame matches 13 run data modify entity @s Pose.Head set value [-178.47628502807447f,1.7647099036167915f,179.1811063980949f]
-							execute if score .this aj.frame matches 14 run data modify entity @s Pose.Head set value [178.47219069831633f,-1.7100208143964344f,179.6657989506252f]
-							execute if score .this aj.frame matches 15 run data modify entity @s Pose.Head set value [179.51447155806233f,0.6206188551293558f,179.7911602445574f]
+							execute if score .this aj.frame matches 8 run data modify entity @s Pose.Head set value [-179.4835137444761f,1.4557776349071547f,-178.80907472989358f]
+							execute if score .this aj.frame matches 9 run data modify entity @s Pose.Head set value [178.58969615749822f,1.9294963106430918f,-179.2356879379015f]
+							execute if score .this aj.frame matches 10 run data modify entity @s Pose.Head set value [178.55916909959151f,-1.0901663221203561f,178.5841606919327f]
+							execute if score .this aj.frame matches 11 run data modify entity @s Pose.Head set value [178.64258827787103f,1.6329245120351261f,-178.28716000215204f]
+							execute if score .this aj.frame matches 12 run data modify entity @s Pose.Head set value [-179.10174550366585f,1.2599560876885278f,-179.9847049287404f]
+							execute if score .this aj.frame matches 13 run data modify entity @s Pose.Head set value [-178.8580857187318f,1.990406931349714f,-178.24462736805205f]
+							execute if score .this aj.frame matches 14 run data modify entity @s Pose.Head set value [179.71640249903456f,1.9473419643941765f,-178.35995601407572f]
+							execute if score .this aj.frame matches 15 run data modify entity @s Pose.Head set value [-178.66477319280864f,-1.9303078879298279f,-179.81102293189664f]
 						}
 						execute if score .this aj.frame matches 16..23 run {
-							execute if score .this aj.frame matches 16 run data modify entity @s Pose.Head set value [179.65345667947625f,1.3211282885121576f,179.43365817029346f]
-							execute if score .this aj.frame matches 17 run data modify entity @s Pose.Head set value [-179.2904104786383f,-0.4494214833126017f,179.40949269313936f]
-							execute if score .this aj.frame matches 18 run data modify entity @s Pose.Head set value [178.42509689747396f,1.5515362911418207f,-179.54784555087505f]
-							execute if score .this aj.frame matches 19 run data modify entity @s Pose.Head set value [-179.45827817034962f,-0.23464627538665542f,-178.13731055203726f]
-							execute if score .this aj.frame matches 20 run data modify entity @s Pose.Head set value [179.48455300077234f,-0.11764791528154916f,178.16122857263406f]
-							execute if score .this aj.frame matches 21 run data modify entity @s Pose.Head set value [179.84123825694004f,-0.32629277808945045f,-179.45761858764163f]
-							execute if score .this aj.frame matches 22 run data modify entity @s Pose.Head set value [-178.16851482369162f,-1.5393383647830399f,-179.9369251360556f]
-							execute if score .this aj.frame matches 23 run data modify entity @s Pose.Head set value [178.58081110905167f,0.342996573840601f,-179.3990865175938f]
+							execute if score .this aj.frame matches 16 run data modify entity @s Pose.Head set value [179.0527178142719f,1.6035817207140473f,-178.97932881987208f]
+							execute if score .this aj.frame matches 17 run data modify entity @s Pose.Head set value [-178.1674800667348f,-1.8077377903104705f,-179.565249627143f]
+							execute if score .this aj.frame matches 18 run data modify entity @s Pose.Head set value [178.70269695958294f,-0.149373798029136f,178.50730443932355f]
+							execute if score .this aj.frame matches 19 run data modify entity @s Pose.Head set value [179.96646475895247f,1.9666110254214197f,178.62422578044735f]
+							execute if score .this aj.frame matches 20 run data modify entity @s Pose.Head set value [-179.8995146365488f,-1.7702828134634665f,-179.59381631228575f]
+							execute if score .this aj.frame matches 21 run data modify entity @s Pose.Head set value [-179.27774264516916f,1.3259873088295968f,-179.2910708631013f]
+							execute if score .this aj.frame matches 22 run data modify entity @s Pose.Head set value [178.96889267927153f,1.4808119105510587f,-178.23079494012475f]
+							execute if score .this aj.frame matches 23 run data modify entity @s Pose.Head set value [178.7150606890444f,1.0489902701228808f,179.1612164290822f]
 						}
 						execute if score .this aj.frame matches 24..31 run {
-							execute if score .this aj.frame matches 24 run data modify entity @s Pose.Head set value [178.53113497022656f,-0.8395716226024856f,-179.57580515855898f]
-							execute if score .this aj.frame matches 25 run data modify entity @s Pose.Head set value [178.3571120557156f,0.767055906868907f,178.9248015342581f]
-							execute if score .this aj.frame matches 26 run data modify entity @s Pose.Head set value [-178.45313973264368f,0.3966564153306322f,178.6742838309572f]
-							execute if score .this aj.frame matches 27 run data modify entity @s Pose.Head set value [-178.71079595156843f,1.4320446672906635f,-178.4827050720335f]
-							execute if score .this aj.frame matches 28 run data modify entity @s Pose.Head set value [-178.45183280510238f,0.08300154248601277f,-178.04778509339363f]
-							execute if score .this aj.frame matches 29 run data modify entity @s Pose.Head set value [-178.2146895602589f,1.4634547779777751f,178.53885648103235f]
-							execute if score .this aj.frame matches 30 run data modify entity @s Pose.Head set value [178.20323370026085f,0.8925448113029699f,-178.7523600976548f]
-							execute if score .this aj.frame matches 31 run data modify entity @s Pose.Head set value [178.13039480968771f,-1.254495045372574f,178.21102468215963f]
+							execute if score .this aj.frame matches 24 run data modify entity @s Pose.Head set value [178.89053450921557f,1.9451846281508511f,-179.52643125281284f]
+							execute if score .this aj.frame matches 25 run data modify entity @s Pose.Head set value [-178.35343313487644f,1.400959724960372f,179.96117577460578f]
+							execute if score .this aj.frame matches 26 run data modify entity @s Pose.Head set value [178.32570971600657f,1.5764802284993626f,-179.758809326819f]
+							execute if score .this aj.frame matches 27 run data modify entity @s Pose.Head set value [-179.78670801410345f,0.4028479686669718f,178.22463793669286f]
+							execute if score .this aj.frame matches 28 run data modify entity @s Pose.Head set value [178.1837792925622f,0.8465947082491987f,-178.44156471548462f]
+							execute if score .this aj.frame matches 29 run data modify entity @s Pose.Head set value [-179.5141069709429f,1.6701181032357086f,-179.6409849580502f]
+							execute if score .this aj.frame matches 30 run data modify entity @s Pose.Head set value [178.0849272667287f,0.3884233732227065f,178.61993993427524f]
+							execute if score .this aj.frame matches 31 run data modify entity @s Pose.Head set value [-179.86744497489056f,-0.4066392744226876f,-178.7209306887679f]
 						}
 					}
 					tp @s ~ ~ ~ ~ ~
@@ -15410,8 +15408,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.off
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -15426,8 +15424,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.off
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -15472,7 +15470,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -15928,8 +15926,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.land
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -15944,8 +15942,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.land
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -15990,7 +15988,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -16898,8 +16896,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -16914,8 +16912,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -16960,7 +16958,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -17607,8 +17605,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.idle_off
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -17623,8 +17621,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.idle_off
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -17669,7 +17667,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -18067,8 +18065,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.rotate_a
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -18083,8 +18081,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.rotate_a
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -18129,7 +18127,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -19136,8 +19134,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.rotate_d
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -19152,8 +19150,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.rotate_d
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -19198,7 +19196,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -20205,8 +20203,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.fire_drill
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -20221,8 +20219,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.fire_drill
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -20267,7 +20265,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -21577,8 +21575,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.maver_on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -21593,8 +21591,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.maver_on
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -21639,7 +21637,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -22478,8 +22476,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.maver_off
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -22494,8 +22492,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.maver_off
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -22540,7 +22538,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -23358,8 +23356,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.maver_idle_boost
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -23374,8 +23372,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.maver_idle_boost
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -23420,7 +23418,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -23711,29 +23709,29 @@ dir animations {
 					}
 					execute if entity @s[tag=aj.mech.bone.jetpack] run {
 						execute if score .this aj.frame matches 0..7 run {
-							execute if score .this aj.frame matches 0 run tp @s ^-0.04623 ^3.1195399999999998 ^-0.4219 ~ ~
-							execute if score .this aj.frame matches 1 run tp @s ^-0.04938 ^3.2134599999999995 ^-0.43196 ~ ~
-							execute if score .this aj.frame matches 2 run tp @s ^-0.02442 ^3.2188599999999994 ^-0.42106 ~ ~
-							execute if score .this aj.frame matches 3 run tp @s ^-0.05833 ^3.2887199999999996 ^-0.47355 ~ ~
-							execute if score .this aj.frame matches 4 run tp @s ^-0.00254 ^3.31074 ^-0.42674 ~ ~
-							execute if score .this aj.frame matches 5 run tp @s ^-0.05625 ^3.2808199999999994 ^-0.42387 ~ ~
-							execute if score .this aj.frame matches 6 run tp @s ^-0.0373 ^3.29017 ^-0.44003 ~ ~
-							execute if score .this aj.frame matches 7 run tp @s ^-0.03068 ^3.2774 ^-0.46958 ~ ~
+							execute if score .this aj.frame matches 0 run tp @s ^-0.05376 ^3.1182099999999995 ^-0.42014 ~ ~
+							execute if score .this aj.frame matches 1 run tp @s ^-0.02842 ^3.2091399999999997 ^-0.42985 ~ ~
+							execute if score .this aj.frame matches 2 run tp @s ^-0.00201 ^3.26131 ^-0.46242 ~ ~
+							execute if score .this aj.frame matches 3 run tp @s ^-0.00727 ^3.2550099999999995 ^-0.44012 ~ ~
+							execute if score .this aj.frame matches 4 run tp @s ^-0.0017 ^3.3215699999999995 ^-0.44733 ~ ~
+							execute if score .this aj.frame matches 5 run tp @s ^-0.03549 ^3.31292 ^-0.4611 ~ ~
+							execute if score .this aj.frame matches 6 run tp @s ^-0.01236 ^3.2685499999999994 ^-0.45037 ~ ~
+							execute if score .this aj.frame matches 7 run tp @s ^-0.06098 ^3.25751 ^-0.46845 ~ ~
 						}
 						execute if score .this aj.frame matches 8..15 run {
-							execute if score .this aj.frame matches 8 run tp @s ^-0.05408 ^3.22717 ^-0.43115 ~ ~
-							execute if score .this aj.frame matches 9 run tp @s ^-0.02162 ^3.1690999999999994 ^-0.47088 ~ ~
-							execute if score .this aj.frame matches 10 run tp @s ^-0.05076 ^3.1314899999999994 ^-0.43251 ~ ~
-							execute if score .this aj.frame matches 11 run tp @s ^-0.01818 ^3.1042999999999994 ^-0.42199 ~ ~
-							execute if score .this aj.frame matches 12 run tp @s ^-0.0554 ^3.0690599999999995 ^-0.47288 ~ ~
-							execute if score .this aj.frame matches 13 run tp @s ^-0.0163 ^3.0221999999999998 ^-0.46316 ~ ~
-							execute if score .this aj.frame matches 14 run tp @s ^-0.00628 ^3.01197 ^-0.4541 ~ ~
-							execute if score .this aj.frame matches 15 run tp @s ^-0.01188 ^2.9970799999999995 ^-0.4344 ~ ~
+							execute if score .this aj.frame matches 8 run tp @s ^-0.01956 ^3.2422699999999995 ^-0.46571 ~ ~
+							execute if score .this aj.frame matches 9 run tp @s ^-0.06092 ^3.19137 ^-0.45864 ~ ~
+							execute if score .this aj.frame matches 10 run tp @s ^-0.03803 ^3.17528 ^-0.45084 ~ ~
+							execute if score .this aj.frame matches 11 run tp @s ^-0.01358 ^3.0735399999999995 ^-0.41911 ~ ~
+							execute if score .this aj.frame matches 12 run tp @s ^-0.03955 ^3.03324 ^-0.47034 ~ ~
+							execute if score .this aj.frame matches 13 run tp @s ^-0.01063 ^2.99413 ^-0.43348 ~ ~
+							execute if score .this aj.frame matches 14 run tp @s ^-0.00422 ^3.0000399999999994 ^-0.42577 ~ ~
+							execute if score .this aj.frame matches 15 run tp @s ^-0.03508 ^2.9981799999999996 ^-0.45262 ~ ~
 						}
-						execute if score .this aj.frame matches 16 run tp @s ^-0.00728 ^2.9729099999999997 ^-0.43798 ~ ~
-						execute if score .this aj.frame matches 17 run tp @s ^-0.02956 ^3.02355 ^-0.43448 ~ ~
-						execute if score .this aj.frame matches 18 run tp @s ^-0.01055 ^3.05694 ^-0.45174 ~ ~
-						execute if score .this aj.frame matches 19 run tp @s ^-0.01442 ^3.0957099999999995 ^-0.44441 ~ ~
+						execute if score .this aj.frame matches 16 run tp @s ^-0.01577 ^2.9950599999999996 ^-0.42846 ~ ~
+						execute if score .this aj.frame matches 17 run tp @s ^-0.01572 ^3.03224 ^-0.46491 ~ ~
+						execute if score .this aj.frame matches 18 run tp @s ^-0.00518 ^3.0549 ^-0.46252 ~ ~
+						execute if score .this aj.frame matches 19 run tp @s ^-0.02562 ^3.07557 ^-0.4455 ~ ~
 					}
 					execute store result entity @s Air short 1 run scoreboard players get .this aj.frame
 				}
@@ -24082,8 +24080,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.maver_idle
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -24098,8 +24096,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.maver_idle
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -24144,7 +24142,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {
@@ -25430,8 +25428,8 @@ dir animations {
 		function play {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s add aj.anim.isPlaying
 				# Add animation tag
+				tag @s add aj.anim.isPlaying
 				tag @s add aj.mech.anim.feet_smash
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -25446,8 +25444,8 @@ dir animations {
 		function stop {
 			# Make sure this function has been ran as the root entity
 			execute(if entity @s[tag=aj.mech.root] at @s) {
-				tag @s remove aj.anim.isPlaying
 				# Add animation tag
+				tag @s remove aj.anim.isPlaying
 				tag @s remove aj.mech.anim.feet_smash
 				# Reset animation time
 				scoreboard players set @s aj.frame 0
@@ -25492,7 +25490,7 @@ dir animations {
 		function next_frame {
 			scoreboard players operation .this aj.id = @s aj.id
 			scoreboard players operation .this aj.frame = @s aj.frame
-			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.826] if score @s aj.id = .this aj.id run {
+			execute rotated ~ 0 as @e[type=#mech:bone_entities,tag=aj.mech.bone,distance=..7.525] if score @s aj.id = .this aj.id run {
 				# Split by type
 				execute if entity @s[type=minecraft:area_effect_cloud] run {
 					execute if entity @s[tag=aj.mech.bone.left_leg] run {

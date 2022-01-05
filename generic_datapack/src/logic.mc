@@ -10,18 +10,26 @@ function load{
 	scoreboard objectives add ak.rclick used:warped_fungus_on_a_stick
 	scoreboard objectives add ak.collide dummy
 	scoreboard objectives add ak.speed dummy
+	scoreboard objectives add ak.lastSpeed dummy
+
+	scoreboard objectives add ak.sound.maver_faster dummy
+	scoreboard objectives add ak.sound.maver_ambient dummy
+	scoreboard objectives add ak.sound.maver_slower dummy
+
 	forceload add -30000000 1602
 	setblock <%config.shulker_xyz%> yellow_shulker_box
 }
 
 function tick{
+	execute at @a as @e[type=marker,tag=maver_idle,distance=..30] at @s run function mech:animations/maver_idle/next_frame
 	scoreboard players remove @e[type=marker,tag=aj.mech.root,scores={ak.speed=1..}] ak.speed 1
 	scoreboard players add @e[type=marker,tag=aj.mech.root,scores={ak.speed=..-1}] ak.speed 1
 
 	# gravity
-	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s if block ~ ~-0.01 ~ #logic:passable run tp @s ~ ~-0.2 ~
+	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s if block ~ ~-0.2 ~ #logic:passable run tp @s ~ ~-0.2 ~
+	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s unless block ~ ~-0.2 ~ #logic:passable if block ~ ~0.05 ~ #logic:passable run tp @s ~ ~-0.01 ~
 	# going up 1 tall blocks
-	execute as @e[type=marker,tag=aj.mech.root] at @s unless block ^ ^ ^1 #logic:passable if block ^ ^1 ^0.1 #logic:passable if block ^ ^2 ^0.1 #logic:passable if block ^ ^3 ^0.1 #logic:passable if block ^ ^4 ^0.1 #logic:passable if block ^ ^5 ^0.1 #logic:passable if block ^ ^6 ^0.1 #logic:passable run tp @s ~ ~0.2 ~
+	execute as @e[type=marker,tag=aj.mech.root,tag=!maver_mode] at @s unless block ^ ^0.5 ^1 #logic:passable if block ^ ^1 ^0.1 #logic:passable if block ^ ^2 ^0.1 #logic:passable if block ^ ^3 ^0.1 #logic:passable if block ^ ^4 ^0.1 #logic:passable if block ^ ^5 ^0.1 #logic:passable if block ^ ^6 ^0.1 #logic:passable run tp @s ~ ~0.2 ~
 }
 
 blocks passable{
@@ -57,6 +65,12 @@ function mount{
 	log INF player mounted mech
 	tag @s add ak.mounted
 	function input:inventory/virtualize_inv
+	execute(if entity @s[advancements={logic:enter_titan=true}]){
+		playsound minecraft:titan.ai.welcomeaboard master @a ~ ~ ~ 0.1 0.95
+	} else {
+		playsound minecraft:titan.ai.user-not-recognized master @a ~ ~ ~ 0.1 0.95
+	}
+	advancement grant @s only logic:enter_titan
 	advancement revoke @s only logic:mount
 	LOOP(9,i){
 		item replace entity @s container.<%i%> with minecraft:warped_fungus_on_a_stick{titan.input:1b,CustomModelData:<%3+i%>}
@@ -68,13 +82,14 @@ function mount{
 		# callback when player exits mech
 		execute as @a[predicate=!logic:mounted.titan] run{
 			scoreboard players operation #temp.id ak.var = @s ak.titan.id
-			execute at @s as @e[type=marker,distance=..15,tag=aj.mech.root,sort=nearest,limit=1] if score @s aj.id = #temp.id ak.var run{
+			execute at @s as @e[type=marker,distance=..15,tag=aj.mech.root,sort=nearest,limit=1,tag=!maver_mode] if score @s aj.id = #temp.id ak.var run{
 				function mech:animations/rotate_a/pause
 				function mech:animations/rotate_d/pause
 				stopsound @a master minecraft:titan.on
 				function mech:animations/on/pause
 				function mech:animations/off/play
 			} 
+			execute at @s as @e[type=marker,distance=..15,tag=aj.mech.root,sort=nearest,limit=1,tag=maver_mode] if score @s aj.id = #temp.id ak.var run tag @s add maver_idle
 			tag @s remove ak.mounted
 			tag @s remove ak.titan.id
 			scoreboard players set @s ak.titan.id -1
@@ -89,7 +104,8 @@ function mount{
 			# callback when player enters mech
 			execute if entity @s[tag=!ak.titan.id] at @s positioned ~ ~-3.5 ~ run{
 				log INF linked player ID to mech ID
-				execute as @e[type=marker,distance=..2,tag=aj.mech.root,sort=nearest,limit=1] run{
+				execute positioned ~ ~1.5 ~ as @e[type=marker,distance=..3.5,tag=aj.mech.root,sort=nearest,limit=1,tag=maver_mode] run tag @s remove maver_idle
+				execute as @e[type=marker,distance=..2,tag=aj.mech.root,sort=nearest,limit=1,tag=!maver_mode] run{
 					scoreboard players add @s ak.speed 0
 					stopsound @a master minecraft:titan.off
 					function mech:animations/off/pause
@@ -105,15 +121,20 @@ function mount{
 				item replace entity @s weapon.offhand with air
 
 				scoreboard players set #ifelse ak.var 0
-				
+				# activating maver mode
 				execute at @s as @e[type=marker,tag=aj.mech.root,tag=!aj.anim.isPlaying,distance=..30,tag=!aj.mech.anim.on,tag=!maver_mode] if score @s aj.id = #temp.id ak.var at @s run{
 					scoreboard players set #ifelse ak.var 1
-					function mech:animations/maver_on/play
 					tag @s add maver_mode
+					playsound minecraft:titan.ai.maver.activate master @a ~ ~ ~ 0.15 0.95
+					function mech:animations/maver_on/play
+					tp @s ~ ~ ~ ~ 0
 				} 
+				# deactivating maver mode
 				execute unless score #ifelse ak.var matches 1 at @s as @e[type=marker,tag=!aj.anim.isPlaying,tag=aj.mech.root,distance=..30,tag=!aj.mech.anim.on,tag=maver_mode] if score @s aj.id = #temp.id ak.var at @s run{
 					function mech:animations/maver_off/play
+					playsound minecraft:titan.ai.maver.deactivate master @a ~ ~ ~ 0.15 0.95
 					tag @s remove maver_mode
+					tp @s ~ ~ ~ ~ 0
 				} 
 				log DBG pressed f
 			}
@@ -124,19 +145,122 @@ function mount{
 				}
 			}
 			tag @s add ak.self
-			execute at @s positioned ~ ~-2 ~ as @e[type=marker,tag=aj.mech.root,distance=..30,tag=!aj.mech.anim.on,tag=maver_mode] if score @s aj.id = #temp.id ak.var at @s run{
+
+			# maver mode
+			execute at @s positioned ~ ~-2 ~ as @e[type=marker,tag=aj.mech.root,distance=..30,tag=!aj.mech.anim.on,tag=maver_mode,tag=!aj.mech.anim.maver_on,tag=!aj.mech.anim.maver_off] if score @s aj.id = #temp.id ak.var at @s run{
+				scoreboard players operation @s ak.lastSpeed = @s ak.speed
+				execute unless entity @a[tag=ak.self,distance=..20] run tp @s ~ ~ ~
 				execute anchored eyes rotated as @a[tag=ak.self,distance=..20,limit=1,sort=nearest] positioned ^ ^ ^5 rotated as @s positioned ^ ^ ^40 facing entity @s eyes facing ^ ^ ^-1 positioned as @s run tp @s ~ ~ ~ ~ ~
-				execute if score a ak.wasd matches 1 run{
+				execute if score down ak.collide matches 1 run tp @s ~ ~0.1 ~
+				scoreboard players set w ak.collide 0
+				scoreboard players set s ak.collide 0
+				scoreboard players set a ak.collide 0
+				scoreboard players set d ak.collide 0
+				scoreboard players set up ak.collide 0
+				scoreboard players set down ak.collide 0
+				scoreboard players set rc ak.var 0
+				execute if score @s ak.speed matches 1.. run{
+					scoreboard players add rc ak.var 1
+					execute unless block ~ ~ ~ #logic:passable run{
+						scoreboard players set rc ak.var 25
+						execute at @s run tp @s ~ ~ ~ ~ 0
+					}
+					execute unless score rc ak.var matches 25.. positioned ^ ^ ^0.1 run function $block
+				}
+				scoreboard players set rc ak.var 0
+				execute if score @s ak.speed matches ..-1 run{
+					scoreboard players add rc ak.var 1
+					execute unless block ~ ~ ~ #logic:passable run{
+						scoreboard players set rc ak.var 25
+						execute at @s run tp @s ~ ~ ~ ~ 0
+					}
+					execute unless score rc ak.var matches 25.. positioned ^ ^ ^-0.1 run function $block
+				}
+				execute rotated ~ 0 run{
+					LOOP(7,x){
+						LOOP(5,z){
+							execute unless block ^<%x-3%> ^5.75 ^<%z-2%> #logic:passable run scoreboard players set up ak.collide 1
+							execute unless block ^<%x-3%> ^0.75 ^<%z-2%> #logic:passable run scoreboard players set down ak.collide 1
+							execute unless block ^-2.5 ^<%x/1.5+1%> ^<%z-2%> #logic:passable run scoreboard players set d ak.collide 1
+							execute unless block ^2.5 ^<%x/1.5+1%> ^<%z-2%> #logic:passable run scoreboard players set a ak.collide 1
+							execute unless block ^<%x/1.2-2.5%> ^<%z+1%> ^2 #logic:passable run scoreboard players set w ak.collide 1
+							execute unless block ^<%x/1.2-2.5%> ^<%z+1%> ^-2 #logic:passable run scoreboard players set d ak.collide 1
+							execute if score dev.hitbox ak.var matches 1 run{
+								execute positioned ^<%x-3%> ^5.75 ^<%z-2%> run particle electric_spark
+								execute positioned ^<%x-3%> ^0.75 ^<%z-2%> run particle electric_spark
+							}
+							execute if score dev.hitbox ak.var matches 1 run{
+								execute positioned ^-2.5 ^<%x/1.5+1%> ^<%z-2%> run particle electric_spark
+								execute positioned ^2.5 ^<%x/1.5+1%> ^<%z-2%> run particle electric_spark
+							}
+							execute if score dev.hitbox ak.var matches 1 run{
+								execute positioned ^<%x/1.2-2.5%> ^<%z+1%> ^2 run particle electric_spark
+								execute positioned ^<%x/1.2-2.5%> ^<%z+1%> ^-2 run particle electric_spark
+							}
+						}
+
+					}
+				}
+				
+				execute if score up ak.collide matches 1 run{
+					scoreboard players set @s ak.speed 0
+					tp @s @s
+				}
+				execute if score w ak.collide matches 1 run{
+					scoreboard players set @s ak.speed 0
+					tp @s @s
+				}
+				execute if score s ak.collide matches 1 run{
+					scoreboard players set @s ak.speed 0
+					tp @s @s
+				}
+				execute if score d ak.collide matches 1 run{
+					scoreboard players set @s ak.speed 0
+					tp @s @s
+				}
+				execute if score a ak.collide matches 1 run{
+					scoreboard players set @s ak.speed 0
+					tp @s @s
+				}
+				
+				execute unless score a ak.collide matches 1 if score a ak.wasd matches 1 run{
 					execute at @s run tp @s ^0.2 ^ ^ ~ ~
 				}
-				execute if score d ak.wasd matches 1 run{
+				execute unless score d ak.collide matches 1 if score d ak.wasd matches 1 run{
 					execute at @s run tp @s ^-0.2 ^ ^ ~ ~
 				}
-				execute if score w ak.wasd matches 1 run{
+				execute unless score w ak.collide matches 1 if score w ak.wasd matches 1 run{
 					scoreboard players add @s[scores={ak.speed=..37}] ak.speed 2
 				}
-				execute if score s ak.wasd matches 1 run{
+				execute unless score s ak.collide matches 1 if score s ak.wasd matches 1 run{
 					scoreboard players remove @s[scores={ak.speed=-37..}] ak.speed 2
+				}
+				execute if score @s ak.speed > @s ak.lastSpeed unless score @s ak.speed matches 38.. run{
+					tag @s add maver.notslower
+					execute unless score @s ak.sound.maver_faster matches 1.. run playsound minecraft:titan.maver.faster master @a ~ ~ ~ 0.4
+					execute unless score @s ak.sound.maver_faster matches 1.. run scoreboard players set @s ak.sound.maver_faster 110
+					schedule 1t replace{
+						scoreboard players remove @e[type=marker,scores={ak.sound.maver_faster=1..}] ak.sound.maver_faster 1
+						execute if entity @e[type=marker,scores={ak.sound.maver_faster=1..}] run schedule function $block 1t replace
+					}
+				}
+				execute if score @s[tag=maver.notslower] ak.speed <= @s ak.lastSpeed if score w ak.wasd matches 0 if score s ak.wasd matches 0 run{
+					tag @s remove maver.notslower
+					execute unless score @s ak.sound.maver_slower matches 1.. run playsound minecraft:titan.maver.slower master @a ~ ~ ~ 0.4
+					execute unless score @s ak.sound.maver_slower matches 1.. run scoreboard players set @s ak.sound.maver_slower 110
+					schedule 1t replace{
+						scoreboard players remove @e[type=marker,scores={ak.sound.maver_slower=1..}] ak.sound.maver_slower 1
+						execute if entity @e[type=marker,scores={ak.sound.maver_slower=1..}] run schedule function $block 1t replace
+					}
+				}
+				execute if score @s ak.speed matches 34.. run{
+					tag @s add maver.notslower
+					execute unless score @s ak.sound.maver_ambient matches 1.. run playsound minecraft:titan.maver.ambient master @a ~ ~ ~ 0.4
+					execute unless score @s ak.sound.maver_ambient matches 1.. run scoreboard players set @s ak.sound.maver_ambient 70
+					schedule 1t replace{
+						scoreboard players remove @e[type=marker,scores={ak.sound.maver_ambient=1..}] ak.sound.maver_ambient 1
+						execute if entity @e[type=marker,scores={ak.sound.maver_ambient=1..}] run schedule function $block 1t replace
+					}
 				}
 				execute at @s run{
 					LOOP(60,i){
@@ -145,8 +269,10 @@ function mount{
 					}
 					
 				}
-				execute if entity @s[tag=!aj.anim.isPlaying,tag=!ak.isAnim] run{
+				execute if entity @s[tag=!aj.anim.isPlaying] run{
 					tag @s remove ak.isAnim
+					
+					# playsound minecraft:titan.maver.ambient master @a
 					function mech:animations/maver_idle/next_frame
 				}
 				
@@ -241,5 +367,34 @@ predicate mounted.titan{
   }
 }
 
-
-
+advancement enter_titan{
+    "display": {
+        "title": {
+            "text": "Quite Comfy",
+            "color": "green"
+        },
+        "description": {
+            "text": "Enter a Turtler titan for the first time",
+            "color": "aqua"
+        },
+        "icon": {
+            "item": "minecraft:command_block",
+            "nbt": "{CustomModelData:1}"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true,
+        "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+    },
+    "criteria": {
+        "impossible": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "requirements": [
+        [
+            "impossible"
+        ]
+    ]
+}

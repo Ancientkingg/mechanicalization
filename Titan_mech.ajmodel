@@ -1,7 +1,7 @@
 {
   "meta": {
     "format_version": "0.0",
-    "creation_time": 1641057856,
+    "creation_time": 1641234062,
     "model_format": "animated_java/ajmodel",
     "box_uv": false,
     "settings": {
@@ -9,8 +9,8 @@
         "projectName": "mech",
         "exporter": "animationExporter",
         "rigItem": "minecraft:white_dye",
-        "rigModelsExportFolder": "C:\\Users\\Familie\\AppData\\Roaming\\.minecraft\\resourcepacks\\Mech Titans\\assets\\minecraft\\models\\item\\titan",
-        "predicateFilePath": "C:\\Users\\Familie\\AppData\\Roaming\\.minecraft\\resourcepacks\\Mech Titans\\assets\\minecraft\\models\\item\\white_dye.json",
+        "rigModelsExportFolder": "C:\\Users\\Familie\\Documents\\mechanicalization\\Mech Titans\\assets\\minecraft\\models\\item\\titan",
+        "predicateFilePath": "C:\\Users\\Familie\\Documents\\mechanicalization\\Mech Titans\\assets\\minecraft\\models\\item\\white_dye.json",
         "transparentTexturePath": ""
       },
       "animatedJava_exporter_statueExporter": {
@@ -43,7 +43,7 @@
         "animatingFlagScoreboardObjective": "aj.%projectName.animating",
         "animationLoopModeScoreboardObjective": "aj.%projectName.%animationName.loopMode",
         "exportMode": "mcb",
-        "mcbFilePath": "C:\\Users\\Familie\\AppData\\Roaming\\.minecraft\\saves\\Mech Titans dev\\datapacks\\generic datapack\\src\\mech.mc",
+        "mcbFilePath": "C:\\Users\\Familie\\Documents\\mechanicalization\\generic_datapack\\src\\mech.mc",
         "mcbConfigPath": "",
         "dataPackPath": "C:\\Users\\Familie\\AppData\\Roaming\\.minecraft\\saves\\Mech Titans dev\\datapacks"
       }

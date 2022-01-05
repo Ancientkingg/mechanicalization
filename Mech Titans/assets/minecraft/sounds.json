@@ -23,5 +23,205 @@
     "titan.jetpack":{
         "category": "master",
         "sounds":["titan/jetpack"]
+    },
+    "titan.ai.blockfiller-error":{
+        "category": "master",
+        "sounds":["titan/ai/blockfiller-error"]
+    },
+    "titan.ai.hull-integrity-compromised":{
+        "category": "master",
+        "sounds":["titan/ai/hull-integrity-compromised"]
+    },
+    "titan.ai.no-drill":{
+        "category": "master",
+        "sounds":["titan/ai/no-drill"]
+    },
+    "titan.ai.no-tnt":{
+        "category": "master",
+        "sounds":["titan/ai/no-tnt"]
+    },
+    "titan.ai.user-not-recognized":{
+        "category": "master",
+        "sounds":["titan/ai/user-not-recognized"]
+    },
+    "titan.ai.welcomeaboard":{
+        "category": "master",
+        "sounds":["titan/ai/welcomeaboard"]
+    },
+    "titan.ai.autopilot.activate":{
+        "category": "master",
+        "sounds":["titan/ai/autopilot/activate"]
+    },
+    "titan.ai.autopilot.deactivate":{
+        "category": "master",
+        "sounds":["titan/ai/autopilot/deactivate"]
+    },
+    "titan.ai.fuel.0":{
+        "category": "master",
+        "sounds":["titan/ai/fuel/0"]
+    },
+    "titan.ai.fuel.10":{
+        "category": "master",
+        "sounds":["titan/ai/fuel/10"]
+    },
+    "titan.ai.fuel.25":{
+        "category": "master",
+        "sounds":["titan/ai/fuel/25"]
+    },
+    "titan.ai.fuel.50":{
+        "category": "master",
+        "sounds":["titan/ai/fuel/50"]
+    },
+    "titan.ai.maver.activate":{
+        "category": "master",
+        "sounds":["titan/ai/maver/activate"]
+    },
+    "titan.ai.maver.deactivate":{
+        "category": "master",
+        "sounds":["titan/ai/maver/deactivate"]
+    },
+    "titan.ai.maver.error":{
+        "category": "master",
+        "sounds":["titan/ai/maver/error"]
+    },
+    "titan.ai.oxygen.0":{
+        "category": "master",
+        "sounds":["titan/ai/oxygen/0"]
+    },
+    "titan.ai.oxygen.10":{
+        "category": "master",
+        "sounds":["titan/ai/oxygen/10"]
+    },
+    "titan.ai.oxygen.25":{
+        "category": "master",
+        "sounds":["titan/ai/oxygen/25"]
+    },
+    "titan.ai.oxygen.50":{
+        "category": "master",
+        "sounds":["titan/ai/oxygen/50"]
+    },
+    "titan.ai.scan.detected-life":{
+        "category": "master",
+        "sounds":["titan/ai/scan/detected-life"]
+    },
+    "titan.ai.scan.detected-minerals":{
+        "category": "master",
+        "sounds":["titan/ai/scan/detected-minerals"]
+    },
+    "titan.ai.scan.done":{
+        "category": "master",
+        "sounds":["titan/ai/scan/done"]
+    },
+    "titan.ai.scan.error":{
+        "category": "master",
+        "sounds":["titan/ai/scan/error"]
+    },
+    "titan.ai.scan.start":{
+        "category": "master",
+        "sounds":["titan/ai/scan/start"]
+    },
+    "titan.ai.scan.x.0":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/0"]
+    },
+    "titan.ai.scan.x.1":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/1"]
+    },
+    "titan.ai.scan.x.2":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/2"]
+    },
+    "titan.ai.scan.x.3":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/3"]
+    },
+    "titan.ai.scan.x.4":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/4"]
+    },
+    "titan.ai.scan.x.5":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/5"]
+    },
+    "titan.ai.scan.x.6":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/6"]
+    },
+    "titan.ai.scan.x.7":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/7"]
+    },
+    "titan.ai.scan.x.8":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/8"]
+    },
+    "titan.ai.scan.x.9":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/9"]
+    },
+    "titan.ai.scan.x.10":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/10"]
+    },
+    "titan.ai.scan.x.11":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/11"]
+    },
+    "titan.ai.scan.x.12":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/12"]
+    },
+    "titan.ai.scan.x.13":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/13"]
+    },
+    "titan.ai.scan.x.14":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/14"]
+    },
+    "titan.ai.scan.x.15":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/15"]
+    },
+    "titan.ai.scan.x.16":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/16"]
+    },
+    "titan.ai.scan.x.17":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/17"]
+    },
+    "titan.ai.scan.x.18":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/18"]
+    },
+    "titan.ai.scan.x.19":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/19"]
+    },
+    "titan.ai.scan.x.20":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/20"]
+    },
+    "titan.ai.scan.x.morethan20":{
+        "category": "master",
+        "sounds":["titan/ai/scan/x/morethan20"]
+    },
+    "titan.maver.boost":{
+        "category": "master",
+        "sounds":["titan/maver_boost"]
+    },
+    "titan.maver.ambient":{
+        "category": "master",
+        "sounds":["titan/maver_ambient"]
+    },
+    "titan.maver.faster":{
+        "category": "master",
+        "sounds":["titan/maver_faster"]
+    },
+    "titan.maver.slower":{
+        "category": "master",
+        "sounds":["titan/maver_slower_1","titan/maver_slower_2"]
     }
 }
