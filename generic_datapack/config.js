@@ -1,7 +1,7 @@
 //generated config
 module.exports = {
 	"global": {
-		"onBuildSuccess": require("./notification.js")
+		"onBuildSuccess": null
 	},
 	"mc": {
 		"dev": true,

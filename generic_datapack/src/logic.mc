@@ -13,6 +13,8 @@ function load{
 	scoreboard objectives add ak.lastSpeed dummy
 	scoreboard objectives add ak.fallTime dummy
 	scoreboard objectives add ak.lockMode dummy
+	scoreboard objectives add ak.fireMissile dummy
+	scoreboard objectives add ak.missile.id dummy
 
 	scoreboard objectives add ak.sound.maver_faster dummy
 	scoreboard objectives add ak.sound.maver_ambient dummy
@@ -25,6 +27,34 @@ function load{
 }
 
 function tick{
+	execute as @e[type=armor_stand,tag=ak.missile,scores={ak.missile.id=1..}] at @s run{
+		tag @s add ak.self
+		execute anchored eyes unless block ^ ^0.5 ^ #logic:passable run{
+			scoreboard players operation #temp.id ak.var = @s ak.missile.id
+			kill @s
+			execute as @e[type=marker,tag=ak.target] if score @s ak.missile.id = #temp.id ak.var run kill @s
+			log INF missile hit wall
+			particle minecraft:explosion_emitter ~ ~ ~
+		}
+		execute if entity @e[type=armor_stand,distance=..0.5,tag=ak.missile,tag=!ak.self] run tp @s ^0.7 ^ ^ ~ ~-15
+		tag @s remove ak.self
+		execute anchored eyes run tp @s ^ ^ ^0.3
+	}
+	execute as @e[tag=ak.target] at @s run{
+		tag @s add ak.self
+		scoreboard players operation #temp.id ak.var = @s ak.missile.id
+		execute as @e[type=armor_stand,distance=..1.25,tag=ak.missile,scores={ak.missile.id=1..}] if score @s ak.missile.id = #temp.id ak.var run{
+			kill @s
+			execute if entity @e[type=marker,tag=ak.self,distance=..1] run kill @e[type=marker,tag=ak.self,distance=..1]
+			log INF missile hit target
+			particle minecraft:explosion_emitter ~ ~ ~
+		}
+		execute as @e[type=armor_stand,tag=ak.missile,scores={ak.missile.id=1..}] if score @s ak.missile.id = #temp.id ak.var run scoreboard players add #temp ak.var 1
+		execute if score #temp ak.var matches 1.. as @e[type=armor_stand,tag=ak.missile,scores={ak.missile.id=1..}] if score @s ak.missile.id = #temp.id ak.var at @s anchored eyes facing entity @e[distance=..50,tag=ak.self] feet positioned ^ ^ ^5 rotated as @s positioned ^ ^ ^40 facing entity @s eyes facing ^ ^ ^-1 positioned as @s run tp @s ^ ^ ^0.2 ~ ~
+		execute if score #temp ak.var matches 0 run tag @s remove ak.target
+		tag @s remove ak.self
+	}
+	kill @e[type=item,nbt={Item:{tag:{titan.input:1b}}}]
 	execute at @a run tag @e[type=marker,distance=..40] remove maver_idle_playing
 	execute at @a as @e[type=marker,tag=maver_idle,distance=..30,tag=!maver_idle_playing] at @s run{
 		function mech:animations/maver_idle/next_frame
@@ -101,6 +131,7 @@ function mount{
 
 		# callback when player exits mech
 		execute as @a[predicate=!logic:mounted.titan] run{
+			tag @s remove ak.selectedMissiles
 			scoreboard players operation #temp.id ak.var = @s ak.titan.id
 			execute at @s as @e[type=marker,distance=..15,tag=aj.mech.root,sort=nearest,limit=1,tag=!maver_mode] if score @s aj.id = #temp.id ak.var run{
 				function mech:animations/rotate_a/pause
@@ -135,7 +166,63 @@ function mount{
 				scoreboard players operation @s ak.titan.id = @e[type=marker,distance=..2,tag=aj.mech.root,limit=1,sort=nearest] aj.id
 			}
 			scoreboard players operation #temp.id ak.var = @s ak.titan.id
-			# handling input
+
+			# handling player input
+			tag @s remove ak.firedMissiles
+			execute if entity @s[advancements={input:inventory_changed=true}] run{
+				advancement revoke @s only input:inventory_changed
+				data remove block <%config.shulker_xyz%> Items
+				LOOP(9,i){
+					item replace block <%config.shulker_xyz%> container.<%i%> from entity @s container.<%i%>
+				}
+				execute store result score #inv.temp ak.var if data block <%config.shulker_xyz%> Items[]
+				execute if entity @s[tag=ak.selectedMissiles] run{
+					tag @s add ak.firedMissiles
+				}
+				execute if score #inv.temp ak.var matches ..8 run{
+					clear @s
+					LOOP(9,i){
+						item replace entity @s container.<%i%> with minecraft:warped_fungus_on_a_stick{titan.input:1b,CustomModelData:<%3+i%>}
+					}
+				}
+			
+			}
+			# lock on, possibly fire
+			execute if entity @s[tag=ak.selectedMissiles] run{
+				execute at @s run function input:lock
+				# callback: all targeted entities have tag ak.target
+				tag @s add ak.self
+				execute if entity @s[tag=ak.firedMissiles] at @s as @e[type=minecraft:armor_stand,tag=aj.mech.bone.left_arm,distance=..15] at @s if score @s aj.id = @a[tag=ak.self,limit=1] ak.titan.id positioned ^0.2 ^ ^2 run{
+					LOOP(4,i){
+						scoreboard players add #global.id ak.missile.id 1
+						summon armor_stand ~ ~ ~ {Tags:["ak.missile","ak.new"],Silent:1b,Invulnerable:1b,HasVisualFire:0b,Marker:1b,Invisible:1b,ArmorItems:[{},{},{},{id:"minecraft:player_head",Count:1b,tag:{SkullOwner:{Id:[I;1031853657,919423726,-2059367205,1418649205],Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2FmNTk3NzZmMmYwMzQxMmM3YjU5NDdhNjNhMGNmMjgzZDUxZmU2NWFjNmRmN2YyZjg4MmUwODM0NDU2NWU5In19fQ=="}]}}}}]}
+						tp @e[type=armor_stand,distance=..1,tag=ak.new,limit=1] ~ ~ ~ ~<%Math.random()*90%> ~<%Math.random()*135-45%>
+						scoreboard players operation @e[type=armor_stand,tag=ak.new,distance=..1] ak.missile.id = #global.id ak.missile.id
+						tag @e[type=armor_stand,distance=..1] remove ak.new
+					}
+					execute as @e[type=armor_stand,tag=ak.missile,distance=..1] at @s run{
+						tag @e[distance=..40,tag=ak.target,tag=!ak.missile.id,limit=1,sort=random] add ak.current
+						execute(if entity @e[distance=..40,tag=ak.current]){
+							scoreboard players operation @e[distance=..40,tag=ak.current] ak.missile.id = @s ak.missile.id
+						}else{
+							tag @e[distance=..40,tag=ak.target,limit=1,sort=random] add ak.current
+							scoreboard players operation @s ak.missile.id = @e[distance=..40,tag=ak.current] ak.missile.id
+						}
+						execute as @e[distance=..40,tag=ak.current] run{
+							tag @s add ak.missile.id
+							tag @s remove ak.current
+						}
+					}
+					tag @e[distance=..40] remove ak.missile.id
+				}
+				tag @s remove ak.self
+			}
+			
+
+			
+			tag @s remove ak.selectedMissiles
+			execute if predicate input:rclick1 run tag @s add ak.selectedMissiles
+			
 			execute if predicate input:offhand run{
 				item replace entity @s weapon.mainhand from entity @s weapon.offhand
 				item replace entity @s weapon.offhand with air
@@ -171,7 +258,10 @@ function mount{
 			execute at @s positioned ~ ~-2 ~ as @e[type=marker,tag=aj.mech.root,distance=..30,tag=!aj.mech.anim.on,tag=maver_mode,tag=!aj.mech.anim.maver_on,tag=!aj.mech.anim.maver_off] if score @s aj.id = #temp.id ak.var at @s run{
 				scoreboard players operation @s ak.lastSpeed = @s ak.speed
 				execute unless entity @a[tag=ak.self,distance=..20] run tp @s ~ ~ ~
+
+				#smooth rotation
 				execute anchored eyes rotated as @a[tag=ak.self,distance=..20,limit=1,sort=nearest] positioned ^ ^ ^5 rotated as @s positioned ^ ^ ^40 facing entity @s eyes facing ^ ^ ^-1 positioned as @s run tp @s ~ ~ ~ ~ ~
+
 				execute if score down ak.collide matches 1 run tp @s ~ ~0.1 ~
 				scoreboard players set w ak.collide 0
 				scoreboard players set s ak.collide 0

@@ -31,14 +31,12 @@ function tick{
 
 function lock{
 	tag @s add ak.self
-	tag @e[type=!#input:not_lockable,distance=..40] remove ak.lock
-	execute at @s anchored eyes as @e[type=!#input:not_lockable,distance=..20] run{
+	execute at @s anchored eyes as @e[type=!#input:not_lockable,distance=0.5..20] run{
 		execute facing entity @s feet anchored feet positioned ^ ^ ^1 rotated as @a[tag=ak.self,limit=1] positioned ^ ^ ^-1 if entity @a[tag=ak.self,distance=..0.5,limit=1] run tag @s add ak.locked_on
 	}
 	execute if score @s ak.lockMode matches 1 run tag @e[type=!#input:not_lockable,distance=..20,sort=nearest,limit=4,tag=ak.locked_on] add ak.lock
 	execute unless score @s ak.lockMode matches 1 run tag @e[type=!#input:not_lockable,distance=..20,sort=nearest,limit=1,tag=ak.locked_on] add ak.lock
 	tag @e[type=!#input:not_lockable,distance=..20] remove ak.locked_on
-
 	scoreboard players set rc ak.var 0
 
 	execute unless score @s ak.lockMode matches 1 anchored eyes positioned ^ ^ ^ run{
@@ -53,29 +51,44 @@ function lock{
 		}
 		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
 	}
-	scoreboard players set rc ak.var 0
-	execute if entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] anchored eyes positioned ^ ^ ^ positioned ~ ~-1 ~ facing entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] feet positioned ~ ~1 ~ run{
-		scoreboard players add rc ak.var 1
-		execute unless block ~ ~ ~ #logic:passable run{
-			scoreboard players set rc ak.var 40
-			tag @e[type=!#input:not_lockable,distance=..50] remove ak.lock
-		}	
-		execute if score rc ak.var matches ..39 positioned ~-0.05 ~-0.05 ~-0.05 as @e[type=!#input:not_lockable,tag=!ak.self,dx=0,sort=nearest] if score rc ak.var matches ..39 positioned ~-0.85 ~-0.85 ~-0.85 if entity @s[dx=0] run{
-			scoreboard players set rc ak.var 40
-			execute positioned as @s positioned ^ ^-0.4 ^-3 run function input:particle_hitbox
+	execute as @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] run{
+		scoreboard players set rc ak.var 0
+		execute anchored eyes positioned ^ ^ ^ positioned ~ ~-1 ~ facing entity @s feet positioned ~ ~1 ~ run{
+			scoreboard players add rc ak.var 1
+			execute unless block ~ ~ ~ #logic:passable run{
+				scoreboard players set rc ak.var 40
+				tag @e[type=!#input:not_lockable,distance=..50] remove ak.lock
+			}	
+			execute if score rc ak.var matches ..39 positioned ~-0.05 ~-0.05 ~-0.05 if score rc ak.var matches ..39 positioned ~-0.85 ~-0.85 ~-0.85 if entity @s[dx=0] run{
+				scoreboard players set rc ak.var 40
+				execute positioned as @s positioned ^ ^-0.4 ^-3 run function input:particle_hitbox
+			}
+			execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
 		}
-		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
 	}
+	
 	scoreboard players set rc ak.var 0
 	execute unless entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] anchored eyes positioned ^ ^ ^ run{
 		scoreboard players add rc ak.var 1
 		execute unless block ~ ~ ~ #logic:passable run{
-			scoreboard players set rc ak.var 40
-			execute positioned ^ ^-0.4 ^-3 run function input:particle_hitbox
-		}	
+			scoreboard players set rc ak.var 60
+			execute positioned ^ ^-1 ^-3 run function input:particle_hitbox
+			execute if entity @s[tag=ak.firedMissiles] positioned ^ ^-1 ^-3 run{
+				LOOP(4,i){
+					summon marker ~ ~ ~ {Tags:["ak.target"]}
+				}
+			} 
+		}
 		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
 	}
+	execute if score rc ak.var matches 40..59 unless entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] anchored eyes positioned ^ ^-1 ^17 run function input:particle_hitbox
+	execute if entity @s[tag=ak.firedMissiles] if score rc ak.var matches 40..59 unless entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] anchored eyes positioned ^ ^-1 ^17 run summon marker ~ ~ ~ {Tags:["ak.target"]}
+	
+	execute unless score @s ak.lockMode matches 1 if entity @s[tag=ak.firedMissiles] run tag @e[type=!#input:not_lockable,distance=..40,tag=ak.lock] add ak.target
+	execute if score @s ak.lockMode matches 1 if entity @s[tag=ak.firedMissiles] at @e[type=!#input:not_lockable,distance=..40,tag=ak.lock] run summon marker ~ ~ ~ {Tags:["ak.target"]}
+
 	tag @s remove ak.self
+	tag @e[type=!#input:not_lockable,distance=..40] remove ak.lock
 }
 
 entities not_lockable{
@@ -84,7 +97,6 @@ entities not_lockable{
 	minecraft:item
 	minecraft:item_frame
 	minecraft:area_effect_cloud
-	\#input:minecarts
 }
 
 function particle_hitbox{
@@ -238,6 +250,14 @@ predicate offhand{
         ],
         "nbt": "{titan.input:1b}"
       }
+    }
+  }
+}
+
+advancement inventory_changed{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed"
     }
   }
 }
