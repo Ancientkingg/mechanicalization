@@ -12,6 +12,7 @@ function load{
 	scoreboard objectives add ak.speed dummy
 	scoreboard objectives add ak.lastSpeed dummy
 	scoreboard objectives add ak.fallTime dummy
+	scoreboard objectives add ak.lockMode dummy
 
 	scoreboard objectives add ak.sound.maver_faster dummy
 	scoreboard objectives add ak.sound.maver_ambient dummy
@@ -24,7 +25,11 @@ function load{
 }
 
 function tick{
-	execute at @a as @e[type=marker,tag=maver_idle,distance=..30] at @s run function mech:animations/maver_idle/next_frame
+	execute at @a run tag @e[type=marker,distance=..40] remove maver_idle_playing
+	execute at @a as @e[type=marker,tag=maver_idle,distance=..30,tag=!maver_idle_playing] at @s run{
+		function mech:animations/maver_idle/next_frame
+		tag @s add maver_idle_playing
+	}
 	scoreboard players remove @e[type=marker,tag=aj.mech.root,scores={ak.speed=1..}] ak.speed 1
 	scoreboard players add @e[type=marker,tag=aj.mech.root,scores={ak.speed=..-1}] ak.speed 1
 

@@ -35,12 +35,13 @@ function lock{
 	execute at @s anchored eyes as @e[type=!#input:not_lockable,distance=..20] run{
 		execute facing entity @s feet anchored feet positioned ^ ^ ^1 rotated as @a[tag=ak.self,limit=1] positioned ^ ^ ^-1 if entity @a[tag=ak.self,distance=..0.5,limit=1] run tag @s add ak.locked_on
 	}
-	tag @e[type=!#input:not_lockable,distance=..20,sort=nearest,limit=1,tag=ak.locked_on] add ak.lock
+	execute if score @s ak.lockMode matches 1 run tag @e[type=!#input:not_lockable,distance=..20,sort=nearest,limit=4,tag=ak.locked_on] add ak.lock
+	execute unless score @s ak.lockMode matches 1 run tag @e[type=!#input:not_lockable,distance=..20,sort=nearest,limit=1,tag=ak.locked_on] add ak.lock
 	tag @e[type=!#input:not_lockable,distance=..20] remove ak.locked_on
 
 	scoreboard players set rc ak.var 0
 
-	execute anchored eyes positioned ^ ^ ^ run{
+	execute unless score @s ak.lockMode matches 1 anchored eyes positioned ^ ^ ^ run{
 		scoreboard players add rc ak.var 1
 		execute unless block ~ ~ ~ #logic:passable run scoreboard players set rc ak.var 40
 		execute if score rc ak.var matches ..39 positioned ~-0.05 ~-0.05 ~-0.05 as @e[type=!#input:not_lockable,tag=!ak.self,dx=0,sort=nearest] if score rc ak.var matches ..39 positioned ~-0.85 ~-0.85 ~-0.85 if entity @s[dx=0] run{
@@ -53,7 +54,7 @@ function lock{
 		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
 	}
 	scoreboard players set rc ak.var 0
-	execute anchored eyes positioned ^ ^ ^ positioned ~ ~-1 ~ facing entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] feet positioned ~ ~1 ~ run{
+	execute if entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] anchored eyes positioned ^ ^ ^ positioned ~ ~-1 ~ facing entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] feet positioned ~ ~1 ~ run{
 		scoreboard players add rc ak.var 1
 		execute unless block ~ ~ ~ #logic:passable run{
 			scoreboard players set rc ak.var 40
@@ -65,8 +66,15 @@ function lock{
 		}
 		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
 	}
-	# effect clear @e
-	# effect give @e[type=!#input:not_lockable,distance=..20,tag=ak.lock] glowing 1 1 true
+	scoreboard players set rc ak.var 0
+	execute unless entity @e[type=!#input:not_lockable,distance=..30,tag=ak.lock] anchored eyes positioned ^ ^ ^ run{
+		scoreboard players add rc ak.var 1
+		execute unless block ~ ~ ~ #logic:passable run{
+			scoreboard players set rc ak.var 40
+			execute positioned ^ ^-0.4 ^-3 run function input:particle_hitbox
+		}	
+		execute unless score rc ak.var matches 40.. positioned ^ ^ ^0.5 run function $block
+	}
 	tag @s remove ak.self
 }
 
